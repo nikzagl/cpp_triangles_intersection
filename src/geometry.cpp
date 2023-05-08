@@ -5,7 +5,7 @@
 
 bool is_approximately_equal(double a, double b)
 {
-    return std::abs(a - b) <= max_error;
+    return std::abs(a - b) <= MAX_ERROR;
 }
 
 double skew_product(Point first_vector, Point second_vector)

@@ -4,12 +4,13 @@
 #include <vector>
 #include "point.hpp"
 #include "line.hpp"
+#include "globals.hpp"
 
 class Triangle
 {
     std::vector<Line> lines;
 public:
-    Triangle(const std::array<Point, triangle_points_number>& points);
+    Triangle(const std::array<Point,TRIANGLE_POINTS_NUM>& points);
     bool is_covering(Point point) const;
     const std::vector<Line> & get_lines() const {return lines;}
 };

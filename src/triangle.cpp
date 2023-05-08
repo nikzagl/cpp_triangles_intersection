@@ -1,10 +1,10 @@
 #include "triangle.hpp"
 
-Triangle::Triangle(const std::array<Point, triangle_points_number> &points)
+Triangle::Triangle(const std::array<Point,TRIANGLE_POINTS_NUM> &points)
 {
-    for (int line_index = 0; line_index <triangle_points_number; line_index++)
+    for (int line_index = 0; line_index <TRIANGLE_POINTS_NUM; line_index++)
     {
-        lines.emplace_back(points[line_index], points[(line_index+1)%triangle_points_number]);
+        lines.emplace_back(points[line_index], points[(line_index+1)%TRIANGLE_POINTS_NUM]);
     }
 }
 
@@ -12,7 +12,7 @@ bool Triangle::is_covering(Point point) const {
     bool is_all_non_negative = true;
     bool is_all_non_positive = true;
     double curr_skew_product = 0;
-    for (int i = 0; i < triangle_points_number; i++)
+    for (int i = 0; i < TRIANGLE_POINTS_NUM; i++)
     {
         curr_skew_product = lines[i].skew_product_from_dot_to_line(point);
         if (curr_skew_product < 0)
@@ -47,8 +47,8 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
         }
     }
     Intersection curr_intersection;
-    for (int i = 0; i <= triangle_points_number; i++) {
-        for (int j = 0; j <= triangle_points_number; j++)
+    for (int i = 0; i <= TRIANGLE_POINTS_NUM; i++) {
+        for (int j = 0; j <= TRIANGLE_POINTS_NUM; j++)
         {
             curr_intersection = triangle_1_lines[i].get_intersection(triangle_2_lines[j]);
             if (curr_intersection.is_defined)

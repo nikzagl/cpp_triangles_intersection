@@ -12,9 +12,8 @@
 #include "line.hpp"
 #include "matrix.hpp"
 #include "triangle.hpp"
+#include "globals.hpp"
 
-constexpr double max_error = 1e-7;
-constexpr int triangle_points_number = 3;
 bool is_approximately_equal(double a, double b);
 
 void sort_points(std::vector<Point>& points, const Point& pivot);
