@@ -3,16 +3,12 @@
 //
 #include "geometry.hpp"
 
-bool is_approximately_equal(double a, double b)
-{
-    return std::abs(a - b) <= MAX_ERROR;
-}
-
 double skew_product(Point first_vector, Point second_vector)
 {
     Matrix_2_2 vector_matrix(first_vector.x, first_vector.y,second_vector.x, second_vector.y);
     return vector_matrix.determinant();
 }
+
 double angle_with_x_axis(Point first_point, Point second_point)
 {
     Point line_vector = get_vector(first_point, second_point);

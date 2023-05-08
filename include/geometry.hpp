@@ -14,9 +14,10 @@
 #include "triangle.hpp"
 #include "globals.hpp"
 
-bool is_approximately_equal(double a, double b);
-
+bool is_approximately_equal(Point first_point, Point second_point);
 void sort_points(std::vector<Point>& points, const Point& pivot);
+double skew_product(Point first_vector, Point second_vector);
+double angle_with_x_axis(Point first_point, Point second_point);
 
 struct Intersection
 {

@@ -12,5 +12,5 @@ double distance(Point first_point, Point second_point)
 
 bool is_approximately_equal(Point first_point, Point second_point)
 {
-    return is_approximately_equal(first_point.x, second_point.x) && is_approximately_equal(first_point.y, second_point.y);
+    return distance(first_point,second_point) <= MAX_ERROR;
 }

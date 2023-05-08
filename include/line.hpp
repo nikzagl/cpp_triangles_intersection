@@ -4,6 +4,7 @@
 #include "point.hpp"
 #include "geometry.hpp"
 #include "matrix.hpp"
+#include "misc.hpp"
 
 class Line
 {
