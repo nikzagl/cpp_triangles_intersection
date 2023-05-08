@@ -1,7 +1,7 @@
 #ifndef CPP_TRIANGLES_INTERSECTION_GLOBALS_HPP
 #define CPP_TRIANGLES_INTERSECTION_GLOBALS_HPP
 
-#define MAX_ERROR 1e-7
-#define TRIANGLE_POINTS_NUM 3
+constexpr double max_error = 1e-7;
+constexpr double triangle_points_num = 3;
 
 #endif
