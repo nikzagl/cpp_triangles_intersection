@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdio>
-#include "geometry.h"
+#include "geometry.hpp"
+
+
 int main() {
     std::array<Point, 3> points_1 = {{{0,0},{2,2},{4,0}}};
     std::array<Point, 3> points_2 = {{{-2, 2},{2, 2},{2, -2}}};
