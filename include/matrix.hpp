@@ -6,6 +6,7 @@
 
 class Matrix_2_2
 {
+private:
     std::array<std::array<double,2>,2> matrix{{0}};
 public:
     Matrix_2_2(double a_11, double a_12, double a_21, double a_22);

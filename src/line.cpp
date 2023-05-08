@@ -49,3 +49,8 @@ Intersection Line::get_intersection(const Line &other_line)
 double Line::skew_product_from_dot_to_line(Point point) const {
     return skew_product(get_vector(point, m_second_point), get_vector(point, m_first_point));
 }
+
+Point Line::first_point() const { return this->m_first_point; }
+Point Line::second_point() const { return this->m_second_point; }
+
+Line::Line(Point first_point, Point second_point) : m_first_point(first_point), m_second_point(second_point) {};

@@ -8,6 +8,8 @@ Triangle::Triangle(const std::array<Point,TRIANGLE_POINTS_NUM> &points)
     }
 }
 
+const std::vector<Line>& Triangle::get_lines() const { return this->lines; }
+
 bool Triangle::is_covering(Point point) const {
     bool is_all_non_negative = true;
     bool is_all_non_positive = true;
