@@ -133,7 +133,6 @@ void desmos::draw_grid()
 void desmos::update_window_true_dim()
 {
     this->pix_true_size = (PIX_NORMAL_TRUE_SIZE*this->camera.second);
-    std::cout << camera.second << '\n';
     this->window_true_h = (double)this->h*pix_true_size;
     this->window_true_w = (double)this->w*pix_true_size;
 }
