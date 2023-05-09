@@ -14,6 +14,7 @@ TEST(test_geometry, is_approximately_equal_false){
     ASSERT_FALSE(is_approximately_equal(first_point, second_point));
 }
 
+
 TEST(test_geometry, angle_with_x_axis_expected_result){
     Point first_point{1.0, 1.0};
     Point second_point{2.0, 2.0};
