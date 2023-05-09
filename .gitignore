@@ -1,3 +1,4 @@
-desmos.hpp
-desmos.cpp
 main
+build/
+./main
+.vscode
