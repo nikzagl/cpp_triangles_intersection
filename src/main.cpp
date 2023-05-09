@@ -11,7 +11,7 @@ constexpr int intersect_line_r = 192;
 constexpr int intersect_line_g = 42;
 constexpr int intersect_line_b = 22;
 
-/*
+
 int main() {
     std::array<Point, 3> points_1 = {{{0,0},{2,2},{4,0}}};
     std::array<Point, 3> points_2 = {{{-2, 2},{2, 2},{2, -2}}};
@@ -36,4 +36,3 @@ int main() {
 
     return 0;
 }
-*/
