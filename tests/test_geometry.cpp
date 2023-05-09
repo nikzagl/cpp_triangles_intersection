@@ -11,5 +11,12 @@ TEST(test_geometry, is_approximately_equal_true){
 TEST(test_geometry, is_approximately_equal_false){
     Point first_point{1.0, 1.0};
     Point second_point{2.0, 2.0};
-    ASSERT_TRUE(is_approximately_equal(first_point, second_point));
+    ASSERT_FALSE(is_approximately_equal(first_point, second_point));
+}
+
+TEST(test_geometry, angle_with_x_axis_expected_result){
+    Point first_point{1.0, 1.0};
+    Point second_point{2.0, 2.0};
+    Point vector{second_point.x - first_point.x, second_point.y - first_point.y};
+    ASSERT_DOUBLE_EQ(angle_with_x_axis(first_point, second_point), atan(vector.y / vector.x));
 }

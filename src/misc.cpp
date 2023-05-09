@@ -1,4 +1,5 @@
 #include "misc.hpp"
+#include <cmath>
 
 bool is_approximately_equal(double a, double b)
 {

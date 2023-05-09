@@ -1,7 +1,7 @@
 #ifndef CPP_TRIANGLES_INTERSECTION_POINT_HPP
 #define CPP_TRIANGLES_INTERSECTION_POINT_HPP
 
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include "globals.hpp"
 
