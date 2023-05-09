@@ -6,7 +6,7 @@ desmos::dline::dline(const Line& line, const SDL_Color& rgba_color, int thicknes
 desmos::desmos(int h, int w) : h(h), w(w)
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
-        throw std::runtime_error("Failed to initialize SDL.");
+        throw std::runtime_error(SDL_GetError());
     this->window = SDL_CreateWindow("desmos",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,w+1,h+1,SDL_WINDOW_SHOWN);
     if(!this->window)
         throw std::runtime_error("Failed to create SDL window.");
@@ -19,7 +19,7 @@ desmos::desmos(int h, int w) : h(h), w(w)
     this->camera.first.y = 10;
     this->renderer = SDL_CreateRenderer(this->window,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(!this->renderer)
-        throw std::runtime_error("Failed to create SDL window.");
+        throw std::runtime_error(SDL_GetError());
 }
 
 bool desmos::point_out_of_bounds(int x, int y) { return x < 0 or x > this->w or y < 0 or y > this->h; }
