@@ -1,4 +1,5 @@
 #include "point.hpp"
+#include <cmath>
 
 Point get_vector(Point first_point, Point second_point)
 {
