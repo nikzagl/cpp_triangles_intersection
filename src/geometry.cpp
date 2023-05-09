@@ -12,7 +12,11 @@ double skew_product(Point first_vector, Point second_vector)
 double angle_with_x_axis(Point first_point, Point second_point)
 {
     Point line_vector = get_vector(first_point, second_point);
-    return atan(line_vector.y / line_vector.x);
+    double angle_with_sign = atan(line_vector.y / line_vector.x);
+    if (angle_with_sign >= 0) {
+        return angle_with_sign;
+    }
+    return 2*pi()-angle_with_sign;
 }
 
 bool compare_points_through_angle(Point first_point, Point second_point, Point pivot)
@@ -21,9 +25,9 @@ bool compare_points_through_angle(Point first_point, Point second_point, Point p
     double second_angle = angle_with_x_axis(second_point, pivot);
     if (is_approximately_equal(first_angle, second_angle))
     {
-        return distance(first_point,pivot) < distance(second_point, pivot);
+        return distance(first_point,pivot) > distance(second_point, pivot);
     }
-    return first_angle < second_angle;
+    return first_angle > second_angle;
 }
 void sort_points(std::vector<Point>& points, const Point& pivot)
 {
