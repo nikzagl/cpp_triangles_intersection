@@ -1,6 +1,7 @@
 //d
 // Created by home on 20.04.23.
 //
+#include <cmath>
 #include "geometry.hpp"
 
 double skew_product(Point first_vector, Point second_vector)
@@ -16,7 +17,7 @@ double angle_with_x_axis(Point first_point, Point second_point)
     if (angle_with_sign >= 0) {
         return angle_with_sign;
     }
-    return 2*pi()-angle_with_sign;
+    return 2*M_PI-angle_with_sign;
 }
 
 bool compare_points_through_angle(Point first_point, Point second_point, Point pivot)
