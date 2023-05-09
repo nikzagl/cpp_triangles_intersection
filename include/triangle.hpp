@@ -11,7 +11,7 @@ class Triangle
 private:
     std::vector<Line> lines;
 public:
-    Triangle(const std::array<Point,TRIANGLE_POINTS_NUM>& points);
+    Triangle(const std::array<Point,triangle_points_num>& points);
     bool is_covering(Point point) const;
     const std::vector<Line> & get_lines() const;
 };
