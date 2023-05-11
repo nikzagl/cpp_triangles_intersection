@@ -1,5 +1,5 @@
 #include "triangle.hpp"
-#include "memory"
+#include <algorithm>
 Triangle::Triangle(const std::array<Point,triangle_points_num> &points)
 {
     for (int line_index = 0; line_index <triangle_points_num; line_index++)
@@ -28,7 +28,12 @@ bool Triangle::is_covering(const Point& point) const {
     }
     return is_all_non_negative || is_all_non_positive;
 }
-
+bool is_in(const std::vector<Point>& points, const Point& comparing_point)
+{
+    auto condition = [&comparing_point](const Point& point)
+            {return is_approximately_equal(point, comparing_point);};
+    return std::any_of(points.begin(), points.end(), condition);
+}
 std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const Triangle& triangle_2)
 {
     std::vector<Point> points;
@@ -43,7 +48,8 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
     }
     for (const Line& line: triangle_2_lines)
     {
-        if (triangle_1.is_covering(line.first_point()))
+
+        if(!is_in(points, line.first_point()) && (triangle_1.is_covering(line.first_point())))
         {
             points.push_back(line.first_point());
         }
