@@ -10,7 +10,7 @@ double Matrix_2_2::determinant()
     return matrix[0][0] * matrix[1][1] - matrix[1][0]*matrix[0][1];
 }
 
-Point Matrix_2_2::solve_linear_system(Point b)
+Point Matrix_2_2::solve_linear_system(const Vector2d& b)
 {
     std::array<std::array<double, 2>, 2> delta_x = matrix;
     std::array<std::array<double,2>, 2> delta_y = matrix;

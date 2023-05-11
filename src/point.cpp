@@ -1,17 +1,19 @@
 #include "point.hpp"
 #include <cmath>
-
-Point get_vector(Point first_point, Point second_point)
+#include <memory>
+Vector2d get_vector(const Point& first_point, const Point& second_point)
 {
-    return Point{second_point.x - first_point.x, second_point.y - first_point.y};
+    double x = second_point.x - first_point.x;
+    double y = second_point.y - first_point.y;
+    return Vector2d {x,y};
 }
 
-double distance(Point first_point, Point second_point)
+double distance(const Point& first_point, const Point& second_point)
 {
     return std::sqrt(std::pow(first_point.x - second_point.x, 2) + std::pow(first_point.y - second_point.y, 2));
 }
 
-bool is_approximately_equal(Point first_point, Point second_point)
+bool is_approximately_equal(const Point& first_point, const Point& second_point)
 {
     return distance(first_point,second_point) <= max_error;
 }

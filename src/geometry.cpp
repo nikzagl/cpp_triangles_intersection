@@ -4,13 +4,13 @@
 #include <cmath>
 #include "geometry.hpp"
 
-double skew_product(Point first_vector, Point second_vector)
+double skew_product(const Vector2d& first_vector, const Vector2d& second_vector)
 {
     Matrix_2_2 vector_matrix(first_vector.x, first_vector.y,second_vector.x, second_vector.y);
     return vector_matrix.determinant();
 }
 
-double angle_with_x_axis(Point first_point, Point second_point)
+double angle_with_x_axis(const Point& first_point, const Point& second_point)
 {
     Point line_vector = get_vector(first_point, second_point);
     double angle_with_sign = atan(line_vector.y / line_vector.x);
@@ -20,7 +20,7 @@ double angle_with_x_axis(Point first_point, Point second_point)
     return 2*M_PI-angle_with_sign;
 }
 
-bool compare_points_through_angle(Point first_point, Point second_point, Point pivot)
+bool compare_points(const Point& first_point, const Point& second_point, const Point& pivot)
 {
     double first_angle = angle_with_x_axis(first_point, pivot);
     double second_angle = angle_with_x_axis(second_point, pivot);
@@ -34,6 +34,6 @@ void sort_points(std::vector<Point>& points, const Point& pivot)
 {
     std::sort(points.begin(), points.end(),
               [&](const Point& a, const Point& b) {
-                  return compare_points_through_angle(a, b, pivot);
+                  return compare_points(a, b, pivot);
     });
 }

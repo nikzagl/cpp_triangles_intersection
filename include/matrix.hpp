@@ -10,9 +10,9 @@ private:
     std::array<std::array<double,2>,2> matrix{{0}};
 public:
     Matrix_2_2(double a_11, double a_12, double a_21, double a_22);
-    explicit Matrix_2_2(std::array<std::array<double,2>,2> array): matrix(array){};
+    explicit Matrix_2_2(const std::array<std::array<double,2>,2>& array): matrix(array){};
     double determinant();
-    Point solve_linear_system(Point b);
+    Point solve_linear_system(const Vector2d& b);
 };
 
 #endif
