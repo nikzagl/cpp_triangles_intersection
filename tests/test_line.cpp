@@ -2,6 +2,7 @@
 
 #include "../include/line.hpp"
 
+
 TEST(test_line, test_coordinate_view_expected_result) {
     Point first_point{1.0, 1.0};
     Point second_point{4.0, 2.0};
@@ -43,8 +44,8 @@ TEST(test_line, get_intersection_expected_result_intersect) {
 
     Intersection i = l1.get_intersection(l2);
     ASSERT_TRUE(i.is_defined);
-    ASSERT_DOUBLE_EQ(i.point.x, 126.081);
-    ASSERT_DOUBLE_EQ(i.point.y, 52.3243);
+    ASSERT_DOUBLE_EQ(i.point.x, 126.08108108108108);
+    ASSERT_DOUBLE_EQ(i.point.y,  52.324324324324323);
 }
 
 TEST(test_line, get_intersection_expected_result_not_intersect) {
@@ -70,4 +71,11 @@ TEST(test_line, test_skew_product_from_dot_to_line_expected_result) {
 
     Point dot{132.0, 3.0};
     ASSERT_DOUBLE_EQ(l1.skew_product_from_dot_to_line(dot), 2240.0);
+}
+
+
+int main(int argc, char *argv[])
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

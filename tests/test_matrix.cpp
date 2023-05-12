@@ -14,3 +14,10 @@ TEST(test_matrix, test_solve_linear_system_expected_result){
     ASSERT_DOUBLE_EQ(res.x, -8.7);
     ASSERT_DOUBLE_EQ(res.y, 9.6);
 }
+
+
+int main(int argc, char *argv[])
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
