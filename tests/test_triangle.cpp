@@ -103,10 +103,3 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_4){
     ASSERT_DOUBLE_EQ(res[3].x, 4.166666666666667);
     ASSERT_DOUBLE_EQ(res[3].y, 0.83333333333333326);
 }
-
-
-int main(int argc, char *argv[])
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

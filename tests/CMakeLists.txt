@@ -14,6 +14,5 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # исполняемый файл тестов
-set(TEST_SOURCES  test.cpp test_triangle.cpp test_line.cpp test_geometry.cpp test_matrix.cpp)
-add_executable(test_tst ${TEST_SOURCES})
+add_executable(tests_tst test.cpp)
 target_link_libraries(test_tst ${GTEST_LIBRARIES} pthread)

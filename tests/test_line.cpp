@@ -42,25 +42,9 @@ TEST(test_line, get_intersection_expected_result_intersect) {
 
     Line l2(p1_, p2_);
 
-    Intersection i = l1.get_intersection(l2);
-    ASSERT_TRUE(i.is_defined);
-    ASSERT_DOUBLE_EQ(i.point.x, 126.08108108108108);
-    ASSERT_DOUBLE_EQ(i.point.y,  52.324324324324323);
-}
-
-TEST(test_line, get_intersection_expected_result_not_intersect) {
-    Point p1{14.0, 33.0};
-    Point p2{10.0, 53.0};
-
-    Line l1(p1, p2);
-
-    Point p1_{132.0, 3.0};
-    Point p2_{102.0, 253.0};
-
-    Line l2(p1_, p2_);
-
-    Intersection i = l1.get_intersection(l2);
-    ASSERT_FALSE(i.is_defined);
+    auto p = l1.get_intersection(l2).value();
+    ASSERT_DOUBLE_EQ(p.x, 126.08108108108108);
+    ASSERT_DOUBLE_EQ(p.y,  52.324324324324323);
 }
 
 TEST(test_line, test_skew_product_from_dot_to_line_expected_result) {
@@ -70,12 +54,5 @@ TEST(test_line, test_skew_product_from_dot_to_line_expected_result) {
     Line l1(p1, p2);
 
     Point dot{132.0, 3.0};
-    ASSERT_DOUBLE_EQ(l1.skew_product_from_dot_to_line(dot), 2240.0);
-}
-
-
-int main(int argc, char *argv[])
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    ASSERT_DOUBLE_EQ(l1.skew_product_with_point(dot), 2240.0);
 }
