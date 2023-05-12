@@ -1,22 +1,22 @@
 #include "triangle.hpp"
-
+#include <algorithm>
 Triangle::Triangle(const std::array<Point,triangle_points_num> &points)
 {
     for (int line_index = 0; line_index <triangle_points_num; line_index++)
     {
-        lines.emplace_back(points[line_index], points[(line_index+1)%triangle_points_num]);
+        m_lines.emplace_back(points[line_index], points[(line_index+1)%triangle_points_num]);
     }
 }
 
-const std::vector<Line>& Triangle::get_lines() const { return this->lines; }
+const std::vector<Line>& Triangle::get_lines() const { return m_lines; }
 
-bool Triangle::is_covering(Point point) const {
+bool Triangle::is_covering(const Point& point) const {
     bool is_all_non_negative = true;
     bool is_all_non_positive = true;
     double curr_skew_product = 0;
     for (int i = 0; i < triangle_points_num; i++)
     {
-        curr_skew_product = lines[i].skew_product_from_dot_to_line(point);
+        curr_skew_product = m_lines[i].skew_product_with_point(point);
         if (curr_skew_product < 0)
         {
             is_all_non_positive = false;
@@ -28,7 +28,12 @@ bool Triangle::is_covering(Point point) const {
     }
     return is_all_non_negative || is_all_non_positive;
 }
-
+bool is_in(const std::vector<Point>& points, const Point& comparing_point)
+{
+    auto condition = [&comparing_point](const Point& point)
+            {return is_approximately_equal(point, comparing_point);};
+    return std::any_of(points.begin(), points.end(), condition);
+}
 std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const Triangle& triangle_2)
 {
     std::vector<Point> points;
@@ -43,19 +48,20 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
     }
     for (const Line& line: triangle_2_lines)
     {
-        if (triangle_1.is_covering(line.first_point()))
+
+        if(!is_in(points, line.first_point()) && (triangle_1.is_covering(line.first_point())))
         {
             points.push_back(line.first_point());
         }
     }
-    Intersection curr_intersection;
+    std::optional<Point> curr_intersection;
     for (int i = 0; i <= triangle_points_num; i++) {
         for (int j = 0; j <= triangle_points_num; j++)
         {
             curr_intersection = triangle_1_lines[i].get_intersection(triangle_2_lines[j]);
-            if (curr_intersection.is_defined)
+            if (curr_intersection)
             {
-                points.push_back(curr_intersection.point);
+                points.push_back(curr_intersection.value());
             }
         }
     }

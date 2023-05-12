@@ -4,23 +4,23 @@
 #include <cmath>
 #include <vector>
 #include "globals.hpp"
-
-struct Point
+typedef struct CoordinatePair
 {
     double x, y;
+
+}Point, Vector2d;
+struct compare_points {
+    bool operator()(const Point & a, const Point & b) {
+        return ( a.x<b.x && a.y<b.y );
+    }
 };
 
-struct Intersection
-{
-    Point point{0,0};
-    bool is_defined = false;
-};
 
 
-Point get_vector(Point first_point, Point second_point);
-double distance(Point first_point, Point second_point);
-bool compare_points_through_angle(Point first_point, Point second_point, Point pivot);
-double skew_product(Point first_vector, Point second_vector);
+Vector2d get_vector(const Point& first_point, const Point& second_point);
+double distance(const Point& first_point, const Point& second_point);
+bool compare_points(const Point& first_point, const Point& second_point, const Point& pivot);
+double skew_product(const Point& first_vector, const Point& second_vector);
 void sort_points(std::vector<Point>& points, const Point& pivot);
-
+bool is_approximately_equal(const Point& first_point, const Point& second_point);
 #endif

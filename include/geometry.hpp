@@ -14,8 +14,8 @@
 #include "triangle.hpp"
 #include "globals.hpp"
 
-bool is_approximately_equal(Point first_point, Point second_point);
+bool is_approximately_equal(const Point& first_point, const Point& second_point);
 
-double angle_with_x_axis(Point first_point, Point second_point);
+double angle_with_x_axis(const Point& first_point, const Point& second_point);
 
 #endif //CPP_TRIANGLES_INTERSECTION_GEOMETRY_H
