@@ -71,21 +71,23 @@ void UserInterface::Update()
         ImGui::End();
     }
 
-    std::array<Point, 3> points_1 = {{{m_tr1.point1.x,m_tr1.point1.y},{m_tr1.point2.x,m_tr1.point2.y},{m_tr1.point3.x,m_tr1.point3.y}}};
-    std::array<Point, 3> points_2 = {{{m_tr2.point1.x,m_tr2.point1.y},{m_tr2.point2.x,m_tr2.point2.y},{m_tr2.point3.x,m_tr2.point3.y}}};
-    Triangle tr1 = Triangle(points_1);
-    Triangle tr2 = Triangle(points_2);
-
-    auto intersection_points = get_triangle_intersection(tr1, tr2);
-
-    ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-
-    for(int i = 0; i < intersection_points.size(); ++i)
+    if (show_settings1_window && show_settings2_window)
     {
-        Point point = intersection_points[i];
-        Point point_next = intersection_points[(i+1)%intersection_points.size()];
-        draw_list->AddLine(ImVec2(point.x,point.y),ImVec2(point_next.x,point_next.y),ImColor(255, 255, 102));
-        
+        std::array<Point, 3> points_1 = {{{m_tr1.point1.x,m_tr1.point1.y},{m_tr1.point2.x,m_tr1.point2.y},{m_tr1.point3.x,m_tr1.point3.y}}};
+        std::array<Point, 3> points_2 = {{{m_tr2.point1.x,m_tr2.point1.y},{m_tr2.point2.x,m_tr2.point2.y},{m_tr2.point3.x,m_tr2.point3.y}}};
+        Triangle tr1 = Triangle(points_1);
+        Triangle tr2 = Triangle(points_2);
+
+        auto intersection_points = get_triangle_intersection(tr1, tr2);
+
+        ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
+
+        for(int i = 0; i < intersection_points.size(); ++i)
+        {
+            Point point = intersection_points[i];
+            Point point_next = intersection_points[(i+1)%intersection_points.size()];
+            draw_list->AddLine(ImVec2(point.x,point.y),ImVec2(point_next.x,point_next.y),ImColor(255, 255, 102), 3);
+        }
     }
 
     ImGui::End();

@@ -43,20 +43,10 @@ target_link_libraries(imgui
 
 set(INCLUDE_DIR include)
 
-add_library(GUI src/GUI.cpp include/GUI.hpp)
+file(GLOB SOURCES src/*.cpp)
 
-target_link_libraries(GUI ${OPENGL_LIBRARIES} glfw imgui geometry)
+add_executable(main ${SOURCES})
 
-target_include_directories(GUI PUBLIC ${INCLUDE_DIR})
+target_include_directories(main PUBLIC ${INCLUDE_DIR})
 
-file(GLOB GEOMETRY_SOURCES src/*.cpp)
-
-file(GLOB GEOMETRY_HEADERS include/*.hpp)
-
-add_library(geometry ${GEOMETRY_SOURCES} ${GEOMETRY_HEADERS})
-
-target_include_directories(geometry PUBLIC ${INCLUDE_DIR})
-
-add_executable(main src/main.cpp)
-
-target_link_libraries(main GUI)
+target_link_libraries(main ${OPENGL_LIBRARIES} glfw imgui)
