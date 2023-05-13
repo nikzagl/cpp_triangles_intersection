@@ -5,7 +5,7 @@
 #include "point.hpp"
 #include "line.hpp"
 #include "globals.hpp"
-
+#include <array>
 class Triangle
 {
 private:
@@ -13,9 +13,9 @@ private:
 public:
     Triangle(const std::array<Point,triangle_points_num>& points);
     bool is_covering(const Point& point) const;
-    const std::vector<Line>& get_lines() const;
+    std::vector<Line> lines() const { return m_lines; }
+    std::vector<Point> get_intersection(const Triangle& other) const;
 };
 
-std::vector<Point> get_triangle_intersection(const Triangle& triangle1, const Triangle& triangle_2) ;
 
 #endif

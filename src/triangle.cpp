@@ -1,5 +1,6 @@
 #include "triangle.hpp"
 #include <algorithm>
+#include "misc.hpp"
 Triangle::Triangle(const std::array<Point,triangle_points_num> &points)
 {
     for (int line_index = 0; line_index <triangle_points_num; line_index++)
@@ -8,7 +9,6 @@ Triangle::Triangle(const std::array<Point,triangle_points_num> &points)
     }
 }
 
-const std::vector<Line>& Triangle::get_lines() const { return m_lines; }
 
 bool Triangle::is_covering(const Point& point) const {
     bool is_all_non_negative = true;
@@ -34,22 +34,41 @@ bool is_in(const std::vector<Point>& points, const Point& comparing_point)
             {return is_approximately_equal(point, comparing_point);};
     return std::any_of(points.begin(), points.end(), condition);
 }
-std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const Triangle& triangle_2)
+bool compare_points(const Point& first_point, const Point& second_point, const Point& pivot)
+{
+    Line first_line = Line(pivot, first_point);
+    Line second_line = Line(pivot, second_point);
+    float first_angle = first_line.angle_with_x_axis();
+    float second_angle = second_line.angle_with_x_axis();
+    if (numbers_comparison::is_approximately_equal(first_angle, second_angle))
+    {
+        return first_line.length() < second_line.length();
+    }
+    return first_angle < second_angle;
+}
+void sort_points(std::vector<Point>& points, const Point& pivot)
+{
+    std::sort(points.begin(), points.end(),
+              [&](const Point& a, const Point& b) {
+                  return compare_points(a, b, pivot);
+              });
+}
+std::vector<Point> Triangle::get_intersection(const Triangle& other)const
 {
     std::vector<Point> points;
-    std::vector<Line> triangle_1_lines = triangle_1.get_lines();
-    std::vector<Line> triangle_2_lines = triangle_2.get_lines();
-    for (const Line& line: triangle_1_lines)
+    std::vector<Line> this_lines = lines();
+    std::vector<Line> other_lines = other.lines();
+    for (const Line& line: this_lines)
     {
-        if (triangle_2.is_covering(line.first_point()))
+        if (other.is_covering(line.first_point()))
         {
             points.push_back(line.first_point());
         }
     }
-    for (const Line& line: triangle_2_lines)
+    for (const Line& line: other_lines)
     {
 
-        if(!is_in(points, line.first_point()) && (triangle_1.is_covering(line.first_point())))
+        if(!is_in(points, line.first_point()) && (is_covering(line.first_point())))
         {
             points.push_back(line.first_point());
         }
@@ -58,7 +77,7 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
     for (int i = 0; i <= triangle_points_num; i++) {
         for (int j = 0; j <= triangle_points_num; j++)
         {
-            curr_intersection = triangle_1_lines[i].get_intersection(triangle_2_lines[j]);
+            curr_intersection = this_lines[i].get_intersection(other_lines[j]);
             if (curr_intersection)
             {
                 points.push_back(curr_intersection.value());
@@ -69,7 +88,7 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
         return points;
     Point pivot = points[0];
     for (Point & point : points) {
-        if ((point.y < pivot.y) || ((is_approximately_equal(point.y, pivot.y)&& (point.x < pivot.x))))
+        if ((point.y() < pivot.y()) || (numbers_comparison::is_approximately_equal(point.y(), pivot.y())&& (point.x() < pivot.x())))
         {
             pivot = Point{point};
         }

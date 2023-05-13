@@ -3,7 +3,9 @@
 
 #include <math.h>
 #include "globals.hpp"
-
-bool is_approximately_equal(double a, double b);
+namespace numbers_comparison
+{
+    bool is_approximately_equal(float a, float b);
+}
 
 #endif

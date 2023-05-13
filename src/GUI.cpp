@@ -1,6 +1,6 @@
 #include "GUI.hpp"
-#include "geometry.hpp"
-
+#include <array>
+#include "triangle.hpp"
 void UserInterface::Update()
 {   
 
@@ -78,7 +78,7 @@ void UserInterface::Update()
         Triangle tr1 = Triangle(points_1);
         Triangle tr2 = Triangle(points_2);
 
-        auto intersection_points = get_triangle_intersection(tr1, tr2);
+        auto intersection_points = tr1.get_intersection(tr2);
 
         ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
 
@@ -86,7 +86,7 @@ void UserInterface::Update()
         {
             Point point = intersection_points[i];
             Point point_next = intersection_points[(i+1)%intersection_points.size()];
-            draw_list->AddLine(ImVec2(point.x,point.y),ImVec2(point_next.x,point_next.y),ImColor(255, 255, 102), 3);
+            draw_list->AddLine(ImVec2(point.x(),point.y()),ImVec2(point_next.x(),point_next.y()),ImColor(255, 255, 102), 3);
         }
     }
 
