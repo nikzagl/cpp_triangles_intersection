@@ -1,31 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(tests)
+project(tests_tst)
 set(CMAKE_CXX_STANDARD 17)
-set(BINARY ${CMAKE_PROJECT_NAME}_tst)
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/bc860af08783b8113005ca7697da5f5d49a8056f.zip
-)
-FetchContent_MakeAvailable(googletest)
 
+# используем C++17
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
+# включаем CTest
 enable_testing()
 
-add_executable(
-        test_geometry
-        test_geometry.cpp
-        test_line
-        test_line.cpp
-        test_matrix
-        test_matrix.cpp
-        test_triangle
-        test_triangle.cpp
-)
+# в качестве фреймворка для тестирования используем GoogleTest
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
-target_link_libraries(
-        test_geometry test_line test_matrix test_triangle gtest
-)
-
-include(GoogleTest)
-gtest_discover_tests(test_geometry test_line test_matrix test_triangle)
+# исполняемый файл тестов
+add_executable(tests_tst test.cpp)
+target_link_libraries(test_tst ${GTEST_LIBRARIES} pthread)
