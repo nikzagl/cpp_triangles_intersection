@@ -18,7 +18,6 @@ public:
     float parametric_view(const Point& point) const;
     std::optional<Point> get_intersection(const Line& other_line) const;
     float skew_product_with_point(const Point& point) const;
-    float skew_product(const Point& other_vector);
     float angle_with_x_axis();
 
 };

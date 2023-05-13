@@ -31,7 +31,7 @@ bool Triangle::is_covering(const Point& point) const {
 bool is_in(const std::vector<Point>& points, const Point& comparing_point)
 {
     auto condition = [&comparing_point](const Point& point)
-            {return is_approximately_equal(point, comparing_point);};
+            {return point == comparing_point;};
     return std::any_of(points.begin(), points.end(), condition);
 }
 bool compare_points(const Point& first_point, const Point& second_point, const Point& pivot)

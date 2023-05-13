@@ -23,8 +23,4 @@ public:
 
 
 
-bool compare_points(const Point& first_point, const Point& second_point, const Point& pivot);
-double skew_product(const Point& first_vector, const Point& second_vector);
-void sort_points(std::vector<Point>& points, const Point& pivot);
-bool is_approximately_equal(const Point& first_point, const Point& second_point);
 #endif

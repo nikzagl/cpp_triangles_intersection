@@ -43,7 +43,7 @@ Point solve_linear_system(const std::array<std::array<float, 2>, 2>& matrix, con
 {
     float delta_x = b.x()*matrix[1][1] - matrix[0][1] * b.y();
     float delta_y = matrix[0][0]*b.y() - matrix[1][0] * b.x();
-    float determinant = matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[1][1];
+    float determinant = matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1];
     return {delta_x/determinant, delta_y/determinant};
 }
 std::optional<Point> Line::get_intersection(const Line &other_line) const
@@ -60,7 +60,7 @@ std::optional<Point> Line::get_intersection(const Line &other_line) const
         is_intersects = false;
     }
     intersection_parameters = solve_linear_system(A, b);
-    if ((!in_parametric_range(intersection_parameters.x()) || (in_parametric_range(intersection_parameters.y()))))
+    if ((!in_parametric_range(intersection_parameters.x()) || (!in_parametric_range(intersection_parameters.y()))))
     {
         is_intersects = false;
     }

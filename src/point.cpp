@@ -1,13 +1,10 @@
 #include "point.hpp"
 #include <cmath>
 #include <memory>
-bool is_approximately_equal(float a, float b)
-{
-    return std::abs(a - b) <= max_error;
-}
+#include "misc.hpp"
 bool Point::operator==(const Point &other) const
 {
-    return (is_approximately_equal(m_x, other.m_x))&&(is_approximately_equal(m_y, other.m_y));
+    return (numbers_comparison::is_approximately_equal(m_x, other.m_x))&&(numbers_comparison::is_approximately_equal(m_y, other.m_y));
 }
 bool Point::operator!=(const Point &other) const
 {
@@ -15,7 +12,7 @@ bool Point::operator!=(const Point &other) const
 }
 bool Point::operator<(const Point &other) const
 {
-    if (is_approximately_equal(m_y,other.m_y))
+    if (numbers_comparison::is_approximately_equal(m_y,other.m_y))
     {
         return m_x < other.m_x;
     }
