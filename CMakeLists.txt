@@ -1,16 +1,62 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 project(cpp_triangles_intersection)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CXX_STANDARD 17)
 
-find_package(SDL2 REQUIRED)
+find_package(OpenGL REQUIRED)
 
-include_directories(${SDL2_INCLUDE_DIRS} include)
-add_subdirectory(tests)
+add_subdirectory(glfw)
 
-file(GLOB SOURCES "src/*.cpp")
+#imgui
+set(IMGUI_INCLUDE_DIR imgui)
 
-add_executable(cpp_triangles_intersection ${SOURCES})
-target_link_libraries(cpp_triangles_intersection ${SDL2_LIBRARIES})
+file(GLOB IMGUI_SOURCES imgui/*.cpp)
+file(GLOB IMGUI_HEADERS imgui/*.h)
+
+set(IMGUI_BACKENDS_DIR imgui/backends)
+set(IMGUI_BACKEND_SOURCES
+        ${IMGUI_BACKENDS_DIR}/imgui_impl_glfw.cpp
+        ${IMGUI_BACKENDS_DIR}/imgui_impl_opengl3.cpp)
+set(IMGUI_BACKEND_HEADERS
+        ${IMGUI_BACKENDS_DIR}/imgui_impl_glfw.h
+        ${IMGUI_BACKENDS_DIR}/imgui_impl_opengl3.h)
+
+add_library(imgui STATIC
+        ${IMGUI_SOURCES} ${IMGUI_HEADERS}
+        ${IMGUI_BACKEND_HEADERS} ${IMGUI_BACKEND_SOURCES})
+
+set(GLFW_INCLUDE_DIR glfw/include/GLFW)
+set(GLAD_INCLUDE_DIR glfw/deps/glad)
+
+target_include_directories(imgui PUBLIC
+        ${IMGUI_INCLUDE_DIR}
+        ${IMGUI_BACKENDS_DIR}
+        ${OPENGL_INCLUDE_DIR}
+        ${GLFW_INCLUDE_DIR}
+        ${GLAD_INCLUDE_DIR})
+
+target_link_libraries(imgui
+        ${OPENGL_LIBRARIES}
+        glfw
+        )
+
+set(INCLUDE_DIR include)
+
+add_library(GUI src/GUI.cpp include/GUI.hpp)
+
+target_link_libraries(GUI ${OPENGL_LIBRARIES} glfw imgui geometry)
+
+target_include_directories(GUI PUBLIC ${INCLUDE_DIR})
+
+file(GLOB GEOMETRY_SOURCES src/*.cpp)
+
+file(GLOB GEOMETRY_HEADERS include/*.hpp)
+
+add_library(geometry ${GEOMETRY_SOURCES} ${GEOMETRY_HEADERS})
+
+target_include_directories(geometry PUBLIC ${INCLUDE_DIR})
+
+add_executable(main src/main.cpp)
+
+target_link_libraries(main GUI)
