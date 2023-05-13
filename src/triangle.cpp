@@ -69,9 +69,9 @@ std::vector<Point> get_triangle_intersection(const Triangle& triangle_1, const T
         return points;
     Point pivot = points[0];
     for (Point & point : points) {
-        if (point.y < pivot.y || (point.y == pivot.y && point.x < pivot.x))
+        if ((point.y < pivot.y) || ((is_approximately_equal(point.y, pivot.y)&& (point.x < pivot.x))))
         {
-            pivot = point;
+            pivot = Point{point};
         }
     }
     sort_points(points, pivot);
