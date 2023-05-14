@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(googletest)
 add_subdirectory(glfw)
 #imgui
 set(IMGUI_INCLUDE_DIR imgui)
-
+set(-thread)
 file(GLOB IMGUI_SOURCES imgui/*.cpp)
 file(GLOB IMGUI_HEADERS imgui/*.h)
 
