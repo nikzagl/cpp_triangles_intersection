@@ -22,8 +22,6 @@ jobs:
     - name: Install 
       run: |
             sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev
-            sudo apt-get install -y libxrandr
-            sudo apt-get install -y libxrandr
             sudo apt-get install -y libxrandr-dev
             sudo apt-get install -y libxinerama-dev
             sudo apt-get install  -y libx11-dev
