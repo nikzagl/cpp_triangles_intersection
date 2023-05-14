@@ -78,7 +78,7 @@ float Line::skew_product_with_point(const Point& point) const {
     Point second_vector = Line(point, m_first_point).get_vector();
     return first_vector.skew_product(second_vector);
 }
-float Line::angle_with_x_axis()
+float Line::angle_with_x_axis() const
 {
     Point line_vector = get_vector();
     return atan2(line_vector.y(), line_vector.x());
