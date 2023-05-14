@@ -20,7 +20,16 @@ jobs:
     steps:
     
     - name: Install 
-      run: sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev libxrandr
+      run: sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev
+          sudo apt-get-install libxrandr
+          sudo apt-get install libxrandr
+          sudo apt-get install libxrandr-dev
+          sudo apt-get install libxinerama-dev
+          sudo apt-get install  libx11-dev
+          sudo apt-get install  libxcursor-dev
+          sudo apt-get install  libxi-dev
+          sudo apt-get install  libxext-dev
+
     - uses: actions/checkout@v3
       with:
         submodules: recursive
