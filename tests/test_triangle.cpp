@@ -24,8 +24,8 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_point){
 
     auto res =t1.get_intersection(t2);
     ASSERT_TRUE(res.size() == 1);
-    ASSERT_NEAR(res[0].x(), 0.5, result_max_error);
-    ASSERT_NEAR(res[0].y(), 0.5, result_max_error);
+    ASSERT_NEAR(res[0].get_x(), 0.5, result_max_error);
+    ASSERT_NEAR(res[0].get_y(), 0.5, result_max_error);
 }
 
 TEST(test_triangle, test_get_triangle_intersection_expected_result_empty){
@@ -40,7 +40,7 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_empty){
 
     Triangle t2{std::array<Point, triangle_points_num>{p1_, p2_, p3_}};
     auto res = t1.get_intersection(t2);
-    ASSERT_TRUE(res.empty());
+    ASSERT_TRUE(res.emptget_y());
 }
 
 TEST(test_triangle, test_get_triangle_intersection_expected_result_line){
@@ -56,10 +56,10 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_line){
     Triangle t2{std::array<Point, triangle_points_num>{p1_, p2_, p3_}};
     auto res = t1.get_intersection(t2);
     ASSERT_TRUE(res.size() == 2);
-    ASSERT_NEAR(res[0].x(), 1, result_max_error);
-    ASSERT_NEAR(res[0].y(), 0, result_max_error);
-    ASSERT_NEAR(res[1].x(), 0, result_max_error);
-    ASSERT_NEAR(res[1].y(), 1, result_max_error);
+    ASSERT_NEAR(res[0].get_x(), 1, result_max_error);
+    ASSERT_NEAR(res[0].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[1].get_x(), 0, result_max_error);
+    ASSERT_NEAR(res[1].get_y(), 1, result_max_error);
 }
 
 TEST(test_triangle, test_get_triangle_intersection_expected_result_3){
@@ -75,12 +75,12 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_3){
     Triangle t2{std::array<Point, triangle_points_num>{p1_, p2_, p3_}};
     auto res = t1.get_intersection(t2);
     ASSERT_TRUE(res.size() == 3);
-    ASSERT_NEAR(res[0].x(), 1, result_max_error);
-    ASSERT_NEAR(res[0].y(), 0, result_max_error);
-    ASSERT_NEAR(res[1].x(), 2, result_max_error);
-    ASSERT_NEAR(res[1].y(), 0, result_max_error);
-    ASSERT_NEAR(res[2].x(), 1, result_max_error);
-    ASSERT_NEAR(res[2].y(), 1, result_max_error);
+    ASSERT_NEAR(res[0].get_x(), 1, result_max_error);
+    ASSERT_NEAR(res[0].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[1].get_x(), 2, result_max_error);
+    ASSERT_NEAR(res[1].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[2].get_x(), 1, result_max_error);
+    ASSERT_NEAR(res[2].get_y(), 1, result_max_error);
 }
 
 TEST(test_triangle, test_get_triangle_intersection_expected_result_4){
@@ -96,12 +96,12 @@ TEST(test_triangle, test_get_triangle_intersection_expected_result_4){
     Triangle t2{std::array<Point, triangle_points_num>{p1_, p2_, p3_}};
     auto res = t1.get_intersection(t2);
     ASSERT_TRUE(res.size() == 4);
-    ASSERT_NEAR(res[0].x(), 2, result_max_error);
-    ASSERT_NEAR(res[0].y(), 0, result_max_error);
-    ASSERT_NEAR(res[1].x(), 4, result_max_error);
-    ASSERT_NEAR(res[1].y(), 0, result_max_error);
-    ASSERT_NEAR(res[2].x(), 4.166666666666667, result_max_error);
-    ASSERT_NEAR(res[2].y(), 0.83333333333333326, result_max_error);
-    ASSERT_NEAR(res[3].x(), 3.125, result_max_error);
-    ASSERT_NEAR(res[3].y(), 1.875, result_max_error);
+    ASSERT_NEAR(res[0].get_x(), 2, result_max_error);
+    ASSERT_NEAR(res[0].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[1].get_x(), 4, result_max_error);
+    ASSERT_NEAR(res[1].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[2].get_x(), 4.166666666666667, result_max_error);
+    ASSERT_NEAR(res[2].get_y(), 0.83333333333333326, result_max_error);
+    ASSERT_NEAR(res[3].get_x(), 3.125, result_max_error);
+    ASSERT_NEAR(res[3].get_y(), 1.875, result_max_error);
 }

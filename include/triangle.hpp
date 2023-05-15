@@ -11,10 +11,10 @@ class Triangle
 private:
     std::vector<Line> m_lines;
 public:
-    Triangle(const std::array<Point,triangle_points_num>& points);
-    bool is_covering(const Point& point) const;
-    std::vector<Line> lines() const { return m_lines; }
-    std::vector<Point> get_intersection(const Triangle& other) const;
+    explicit Triangle(const std::array<Point,triangle_points_num>& points);
+    [[nodiscard]] bool is_covering(const Point& point) const;
+    [[nodiscard]] std::vector<Line> get_lines() const { return m_lines; }
+    [[nodiscard]] std::vector<Point> intersect(const Triangle& other) const;
 };
 
 

@@ -53,31 +53,31 @@ void sort_points(std::vector<Point>& points, const Point& pivot)
                   return compare_points(a, b, pivot);
               });
 }
-std::vector<Point> Triangle::get_intersection(const Triangle& other)const
+std::vector<Point> Triangle::intersect(const Triangle& other)const
 {
     std::vector<Point> points;
-    std::vector<Line> this_lines = lines();
-    std::vector<Line> other_lines = other.lines();
+    std::vector<Line> this_lines = get_lines();
+    std::vector<Line> other_lines = other.get_lines();
     for (const Line& line: this_lines)
     {
-        if (other.is_covering(line.first_point()))
+        if (other.is_covering(line.get_first_point()))
         {
-            points.push_back(line.first_point());
+            points.push_back(line.get_first_point());
         }
     }
     for (const Line& line: other_lines)
     {
 
-        if(!is_in(points, line.first_point()) && (is_covering(line.first_point())))
+        if(!is_in(points, line.get_first_point()) && (is_covering(line.get_first_point())))
         {
-            points.push_back(line.first_point());
+            points.push_back(line.get_first_point());
         }
     }
     std::optional<Point> curr_intersection;
     for (int i = 0; i <= triangle_points_num; i++) {
         for (int j = 0; j <= triangle_points_num; j++)
         {
-            curr_intersection = this_lines[i].get_intersection(other_lines[j]);
+            curr_intersection = this_lines[i].intersect(other_lines[j]);
             if (curr_intersection)
             {
                 points.push_back(curr_intersection.value());
@@ -88,7 +88,7 @@ std::vector<Point> Triangle::get_intersection(const Triangle& other)const
         return points;
     Point pivot = points[0];
     for (Point & point : points) {
-        if ((point.y() < pivot.y()) || (numbers_comparison::is_approximately_equal(point.y(), pivot.y())&& (point.x() < pivot.x())))
+        if ((point.get_y() < pivot.get_y()) || (numbers_comparison::is_approximately_equal(point.get_y(), pivot.get_y())&& (point.get_x() < pivot.get_x())))
         {
             pivot = Point{point};
         }

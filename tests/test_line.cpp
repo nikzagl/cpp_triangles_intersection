@@ -8,8 +8,8 @@ TEST(test_line, test_coordinate_view_expected_result) {
     Line line(first_point, second_point);
     double t = 3.45;
     Point result = line.coordinate_view(t);
-    ASSERT_NEAR(result.x(), first_point.x() * t + second_point.x() * (1 - t), result_max_error);
-    ASSERT_NEAR(result.y(), first_point.y() * t + second_point.y() * (1 - t), result_max_error);
+    ASSERT_NEAR(result.get_x(), first_point.get_x() * t + second_point.x() * (1 - t), result_max_error);
+    ASSERT_NEAR(result.get_y(), first_point.get_y() * t + second_point.get_y() * (1 - t), result_max_error);
 }
 
 TEST(test_line, test_parametric_view_expected_result) {
@@ -27,7 +27,7 @@ TEST(test_line, test_parametric_view_expected_result_2) {
     Line line(first_point, second_point);
     Point p{3.4, 5.6};
     double result = line.parametric_view(p);
-    ASSERT_NEAR(result, (p.y() - second_point.y()) / (first_point.y() - second_point.y()),result_max_error);
+    ASSERT_NEAR(result, (p.get_y() - second_point.get_y()) / (first_point.get_y() - second_point.get_y()),result_max_error);
 }
 
 TEST(test_line, get_intersection_expected_result_intersect) {
@@ -43,5 +43,5 @@ TEST(test_line, get_intersection_expected_result_intersect) {
 
     auto p = l1.get_intersection(l2).value();
     ASSERT_NEAR(p.x(), 126.08108108108108, result_max_error);
-    ASSERT_NEAR(p.y(),  52.324324324324323, result_max_error);
+    ASSERT_NEAR(p.get_y(),  52.324324324324323, result_max_error);
 }

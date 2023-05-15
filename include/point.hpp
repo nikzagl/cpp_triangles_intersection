@@ -12,12 +12,12 @@ public:
     Point() = default;
     Point(float x, float y):m_x(x), m_y(y){};
     Point(const Point& other) = default;
-    float x() const {return m_x;} ;
-    float y() const {return m_y;} ;
+    [[nodiscard]] float get_x() const {return m_x;} ;
+    [[nodiscard]] float get_y() const {return m_y;} ;
     bool operator == (const Point& other) const;
     bool operator != (const Point& other) const;
     bool operator < (const Point& other) const;
-    float skew_product(const Point& other)const;
+    [[nodiscard]] float skew_product(const Point& other)const;
 
 };
 

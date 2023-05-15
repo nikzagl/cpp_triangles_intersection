@@ -20,6 +20,6 @@ bool Point::operator<(const Point &other) const
 }
 float Point::skew_product(const Point& other)const
 {
-    return x()*other.y() - y()*other.x();
+    return get_x()*other.get_y() - get_y()*other.get_x();
 }
 
