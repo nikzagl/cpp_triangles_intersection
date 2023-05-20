@@ -29,21 +29,27 @@ set(IMGUI_BACKEND_HEADERS
         ${IMGUI_BACKENDS_DIR}/imgui_impl_glfw.h
         ${IMGUI_BACKENDS_DIR}/imgui_impl_opengl3.h)
 
-add_library(imgui STATIC
+add_library(imgui
         ${IMGUI_SOURCES} ${IMGUI_HEADERS}
         ${IMGUI_BACKEND_HEADERS} ${IMGUI_BACKEND_SOURCES})
 
 set(GLFW_INCLUDE_DIR glfw/include/GLFW)
 set(GLAD_INCLUDE_DIR glfw/deps/glad)
 
-target_include_directories(imgui PUBLIC
+include_directories(
+        ${IMGUI_INCLUDE_DIR}
+        ${IMGUI_BACKENDS_DIR}
+        ${OPENGL_INCLUDE_DIR}
+        ${GLFW_INCLUDE_DIR}
+        ${GLAD_INCLUDE_DIR})
+target_include_directories(imgui PRIVATE
         ${IMGUI_INCLUDE_DIR}
         ${IMGUI_BACKENDS_DIR}
         ${OPENGL_INCLUDE_DIR}
         ${GLFW_INCLUDE_DIR}
         ${GLAD_INCLUDE_DIR})
 
-target_link_libraries(imgui
+target_link_libraries(imgui PRIVATE
         ${OPENGL_LIBRARIES}
         glfw
         )
@@ -68,8 +74,9 @@ target_link_libraries(
         gtest_main
 )
 
-add_executable(main ${SOURCES})
+add_executable(cpp_triangles_intersection ${SOURCES})
 
-target_include_directories(main PUBLIC ${INCLUDE_DIR})
+target_include_directories(cpp_triangles_intersection PUBLIC ${INCLUDE_DIR})
 
-target_link_libraries(main ${OPENGL_LIBRARIES} glfw imgui)
+target_link_libraries(cpp_triangles_intersection ${OPENGL_LIBRARIES} glfw imgui)
+set_target_properties(imgui glfw PROPERTIES FOLDER HiddenTargets)
