@@ -28,7 +28,7 @@ TEST(test_line, test_parametric_view_expected_result_2) {
     double result = line.parametric_view(p);
     ASSERT_NEAR(result, (p.get_y() - second_point.get_y()) / (first_point.get_y() - second_point.get_y()),result_max_error);
 }
-
+ 
 TEST(test_line, get_intersection_expected_result_intersect) {
     Point p1{14.0, 33.0};
     Point p2{130.0, 53.0};
