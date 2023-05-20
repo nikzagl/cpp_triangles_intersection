@@ -59,7 +59,7 @@ add_executable(testing
         src/polygon.cpp
         tests/test_triangle.cpp
         tests/test_line.cpp)
-target_include_directories(testing googletest include imgui)
+target_include_directories(testing PUBLIC googletest include imgui)
 target_link_libraries(
         testing
         imgui
