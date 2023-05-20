@@ -1,26 +1,24 @@
-name: CI
+name: CMake
 
-
-on: 
+on:
   push:
-    branches:
-      - develop
+    branches: [ "main", "develop", "module_*" ]
   pull_request:
-    branches:
-      - develop
+    branches: [ "main", "develop", "module_*"]
 
 jobs:
-  build:
+  ubuntu-build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2      
-    - name: Configure RandR
-      run: sudo apt-get install xorg-dev libglu1-mesa-dev
-    - name: Configure CMake
-      run: cmake -B build -S .
-    - name: Build
-      run: cmake --build build
+    - name: install dependencies
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev libgtest-dev libgmock-dev
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: Build project
+      uses: nicledomaS/cmake_build_action@v1.4
+      with:
+        submodule_update: ON
+        run_tests: ON
+        unit_test_build: -Dtest=ON
     - name: Run tests
-      run: ./build/tests
+      run: ./build/testing
