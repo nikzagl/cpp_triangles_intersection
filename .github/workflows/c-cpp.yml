@@ -1,0 +1,26 @@
+name: CI
+
+
+on: 
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2      
+    - name: Configure RandR
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev
+    - name: Configure CMake
+      run: cmake -B build -S .
+    - name: Build
+      run: cmake --build build
+    - name: Run tests
+      run: ./build/unit_tests
