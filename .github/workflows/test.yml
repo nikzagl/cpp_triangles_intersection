@@ -20,3 +20,5 @@ jobs:
         submodule_update: ON
         run_tests: ON
         unit_test_build: -Dtest=ON
+    - name: Run tests
+      run: ./build/testing
