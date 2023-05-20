@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: cmake --build build
     - name: Run tests
-      run: ./build/unit_tests
+      run: ./build/testing
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
