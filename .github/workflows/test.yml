@@ -10,6 +10,8 @@ jobs:
   ubuntu-build:
     runs-on: ubuntu-latest
     steps:
+    - name: install dependencies
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Build project
