@@ -1,0 +1,27 @@
+name: CMake
+
+on:
+  push:
+    branches: [ "main", "develop", "module_*" ]
+  pull_request:
+    branches: [ "main", "develop", "module_*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2      
+    - name: Configure RandR
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev
+    - name: Configure CMake
+      run: cmake -B build -S .
+    - name: Build
+      run: cmake --build build
+    - name: Run tests
+      run: ./build/unit_tests
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
