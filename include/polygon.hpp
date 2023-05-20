@@ -6,15 +6,15 @@
 #include "line.hpp"
 #include "globals.hpp"
 #include <array>
-class Triangle
+class Polygon
 {
 private:
     std::vector<Line> m_lines;
 public:
-    explicit Triangle(const std::array<Point,triangle_points_num>& points);
+    explicit Polygon(const std::vector<Point>& points);
     [[nodiscard]] bool is_covering(const Point& point) const;
     [[nodiscard]] std::vector<Line> get_lines() const { return m_lines; }
-    [[nodiscard]] std::vector<Point> intersect(const Triangle& other) const;
+    [[nodiscard]] std::vector<Point> intersect(const Polygon& other) const;
 };
 
 

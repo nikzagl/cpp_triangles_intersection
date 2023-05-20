@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
-project(tests)
+project(test_tst)
 
 # GoogleTest requires at least C++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -12,3 +12,15 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+
+add_executable(
+        test_tst test_triangle.cpp test_line.cpp
+)
+target_link_libraries(
+        test_tst
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(test_tst)

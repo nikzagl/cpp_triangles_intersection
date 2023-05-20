@@ -1,6 +1,6 @@
 #include "GUI.hpp"
 #include <array>
-#include "triangle.hpp"
+#include "polygon.hpp"
 void UserInterface::Update()
 {   
 
@@ -73,10 +73,10 @@ void UserInterface::Update()
 
     if (show_settings1_window && show_settings2_window)
     {
-        std::array<Point, 3> points_1 = {{{m_tr1.point1.x,m_tr1.point1.y},{m_tr1.point2.x,m_tr1.point2.y},{m_tr1.point3.x,m_tr1.point3.y}}};
-        std::array<Point, 3> points_2 = {{{m_tr2.point1.x,m_tr2.point1.y},{m_tr2.point2.x,m_tr2.point2.y},{m_tr2.point3.x,m_tr2.point3.y}}};
-        Triangle tr1 = Triangle(points_1);
-        Triangle tr2 = Triangle(points_2);
+        std::vector<Point> points_1 = {{{m_tr1.point1.x,m_tr1.point1.y},{m_tr1.point2.x,m_tr1.point2.y},{m_tr1.point3.x,m_tr1.point3.y}}};
+        std::vector<Point> points_2 = {{{m_tr2.point1.x,m_tr2.point1.y},{m_tr2.point2.x,m_tr2.point2.y},{m_tr2.point3.x,m_tr2.point3.y}}};
+        Polygon tr1 = Polygon(points_1);
+        Polygon tr2 = Polygon(points_2);
 
         auto intersection_points = tr1.intersect(tr2);
 
