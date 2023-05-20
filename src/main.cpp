@@ -1,5 +1,5 @@
 #include "GUI.hpp"
-#include "triangle.hpp"
+#include "polygon.hpp"
 #include <gtest/gtest.h>
 int main(){
     UserInterface window;

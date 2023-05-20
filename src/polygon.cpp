@@ -1,20 +1,20 @@
-#include "triangle.hpp"
+#include "polygon.hpp"
 #include <algorithm>
 #include "misc.hpp"
-Triangle::Triangle(const std::array<Point,triangle_points_num> &points)
+Polygon::Polygon(const std::vector<Point> &points)
 {
-    for (int line_index = 0; line_index <triangle_points_num; line_index++)
+    for (int line_index = 0; line_index < points.size(); line_index++)
     {
-        m_lines.emplace_back(points[line_index], points[(line_index+1)%triangle_points_num]);
+        m_lines.emplace_back(points[line_index], points[(line_index+1)%points.size()]);
     }
 }
 
 
-bool Triangle::is_covering(const Point& point) const {
+bool Polygon::is_covering(const Point& point) const {
     bool is_all_non_negative = true;
     bool is_all_non_positive = true;
     double curr_skew_product = 0;
-    for (int i = 0; i < triangle_points_num; i++)
+    for (int i = 0; i < m_lines.size(); i++)
     {
         curr_skew_product = m_lines[i].skew_product_with_point(point);
         if (curr_skew_product < 0)
@@ -53,7 +53,7 @@ void sort_points(std::vector<Point>& points, const Point& pivot)
                   return compare_points(a, b, pivot);
               });
 }
-std::vector<Point> Triangle::intersect(const Triangle& other)const
+std::vector<Point> Polygon::intersect(const Polygon& other)const
 {
     std::vector<Point> points;
     std::vector<Line> this_lines = get_lines();
@@ -74,8 +74,8 @@ std::vector<Point> Triangle::intersect(const Triangle& other)const
         }
     }
     std::optional<Point> curr_intersection;
-    for (int i = 0; i <= triangle_points_num; i++) {
-        for (int j = 0; j <= triangle_points_num; j++)
+    for (int i = 0; i < this_lines.size(); i++) {
+        for (int j = 0; j < other_lines.size(); j++)
         {
             curr_intersection = this_lines[i].intersect(other_lines[j]);
             if (curr_intersection)

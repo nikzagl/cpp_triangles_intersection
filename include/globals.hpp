@@ -4,5 +4,4 @@
 
 constexpr double max_error   = 1e-7;
 constexpr double result_max_error=1e-4;
-constexpr int triangle_points_num = 3;
 #endif
