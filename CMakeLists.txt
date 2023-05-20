@@ -52,18 +52,24 @@ set(INCLUDE_DIR include)
 file(GLOB SOURCES src/*.cpp)
 file(GLOB TESTS tests/*.cpp)
 
+add_executable(testing
+        src/line.cpp
+        src/misc.cpp
+        src/point.cpp
+        src/polygon.cpp
+        tests/test_triangle.cpp
+        tests/test_line.cpp)
+target_include_directories(testing googletest include imgui)
+target_link_libraries(
+        testing
+        imgui
+        glfw
+        gtest
+        gtest_main
+)
+
 add_executable(main ${SOURCES})
 
 target_include_directories(main PUBLIC ${INCLUDE_DIR})
 
 target_link_libraries(main ${OPENGL_LIBRARIES} glfw imgui)
-add_executable(tests ${SOURCES} tests/test_triangle.cpp)
-target_include_directories(tests PUBLIC ${INCLUDE_DIR} PUBLIC googletest PUBLIC imgui)
-target_link_libraries(
-        tests
-        imgui
-        glfw
-        gtest
-        gtest_main)
-
-
