@@ -10,7 +10,12 @@ Polygon::Polygon(const std::vector<Point> &points)
 
 bool Polygon::is_covering(const Point& point) const
 {
-    return std::adjacent_find(m_lines.begin(),m_lines.end(),[point](const Line& a, const Line& b) { return a.skew_product_with_point(point) < 0 != b.skew_product_with_point(point) < 0; }) == m_lines.end();
+    return std::adjacent_find(m_lines.begin(),m_lines.end(),
+    [point](const Line& a, const Line& b)
+    { 
+        return a.skew_product_with_point(point) < 0 != b.skew_product_with_point(point) < 0; 
+    }
+    ) == m_lines.end();
 }
 
 bool is_in(const std::vector<Point>& points, const Point& comparing_point)
