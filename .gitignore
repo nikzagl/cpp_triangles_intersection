@@ -2,3 +2,4 @@ main
 build/
 ./main
 .vscode
+imgui.ini

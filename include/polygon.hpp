@@ -2,10 +2,14 @@
 #define CPP_TRIANGLES_INTERSECTION_TRIANGLE_HPP
 
 #include <vector>
+#include <algorithm>
+#include <array>
+#include <numeric>
+#include "misc.hpp"
 #include "point.hpp"
 #include "line.hpp"
 #include "globals.hpp"
-#include <array>
+
 class Polygon
 {
 private:
