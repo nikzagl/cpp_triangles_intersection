@@ -4,12 +4,12 @@ Point::Point(float x, float y) : m_x(x), m_y(y) {}
 
 float Point::get_x() const
 {
-    return this->m_x;
+    return m_x;
 }
 
 float Point::get_y() const
 {
-    return this->m_y;
+    return m_y;
 } 
 
 bool Point::operator==(const Point& other) const
@@ -31,22 +31,22 @@ bool Point::operator<(const Point& other) const
 
 Point Point::operator+(const Point& other) const
 {
-    return {this->m_x+other.m_x,this->m_y+other.m_y};
+    return {m_x+other.m_x,m_y+other.m_y};
 }
 
 Point Point::operator-(const Point& other) const
 {
-    return {this->m_x-other.m_x,this->m_y-other.m_y};
+    return {m_x-other.m_x,m_y-other.m_y};
 }
 
 Point Point::operator/(float n) const
 {
-    return {this->m_x/n,this->m_y/n};
+    return {m_x/n,m_y/n};
 }
 
 Point Point::operator-() const
 {
-    return {-this->m_x,-this->m_y};
+    return {-m_x,-m_y};
 }
 
 float Point::skew_product(const Point& other)const

@@ -40,7 +40,7 @@ std::optional<Point> solve_linear_system(const matrix2d& matrix, const Point& b)
 
 std::optional<Point> Line::intersect(const Line &other_line) const
 {
-    Point first_row = -this->make_vector();
+    Point first_row = -make_vector();
     Point second_row = other_line.make_vector();
     matrix2d A;
     A[0] = {first_row.get_x(), second_row.get_x()};

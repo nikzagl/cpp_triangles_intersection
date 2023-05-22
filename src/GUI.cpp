@@ -82,30 +82,30 @@ void Window::Run()
 
 bool UserInterface::polygon::is_completed() const
 {
-    return this->verices_num == this->points.size();
+    return verices_num == points.size();
 }
 
 UserInterface::UserInterface()
 {
-    this->m_tr1.color = ImColor(0, 0, 255);
-    this->m_tr2.color = ImColor(255, 0, 0);
-    glfwSetWindowUserPointer(this->window,this);
-    glfwSetMouseButtonCallback(this->window,this->mouse_button_callback);
+    m_tr1.color = ImColor(0, 0, 255);
+    m_tr2.color = ImColor(255, 0, 0);
+    glfwSetWindowUserPointer(window,this);
+    glfwSetMouseButtonCallback(window,mouse_button_callback);
 }
 
 UserInterface::polygon UserInterface::Get1Triangle()
 {
-    return this->m_tr1;
+    return m_tr1;
 };
 
 UserInterface::polygon UserInterface::Get2Triangle()
 {
-    return this->m_tr2;
+    return m_tr2;
 };
 
 bool UserInterface::is_draw_mode() const
 {
-    return this->draw_mode_1 || this->draw_mode_2;
+    return draw_mode_1 || draw_mode_2;
 }
 
 void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
@@ -113,9 +113,9 @@ void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int 
     ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
     if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        if(this->is_draw_mode())
+        if(is_draw_mode())
         {
-            polygon& target_poly = this->draw_mode_1 ? this->m_tr1 : this->m_tr2;
+            polygon& target_poly = draw_mode_1 ? m_tr1 : m_tr2;
             double xpos,ypos;
             glfwGetCursorPos(window,&xpos,&ypos);
             if(target_poly.points.size() > 1)
@@ -147,7 +147,7 @@ void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int 
             else
                 target_poly.points.push_back(ImVec2(xpos,ypos));
             if(target_poly.points.size() == target_poly.verices_num)
-                this->draw_mode_1 = this->draw_mode_2 = false;
+                draw_mode_1 = draw_mode_2 = false;
         }
     }
 }
@@ -162,30 +162,30 @@ void UserInterface::draw_buttons_set_mode()
 {
     if(ImGui::Button("Draw polygon 1"))
     {
-        this->draw_mode_1 = true;
-        this->draw_mode_2 = false;
-        this->m_tr1.points.clear();
-        this->m_tr1.verices_num = this->v1;
-        if(!this->m_tr2.is_completed())
-            this->m_tr2.points.clear();
+        draw_mode_1 = true;
+        draw_mode_2 = false;
+        m_tr1.points.clear();
+        m_tr1.verices_num = v1;
+        if(!m_tr2.is_completed())
+            m_tr2.points.clear();
     }
     else if(ImGui::Button("Draw polygon 2"))
     {
-        this->draw_mode_1 = false;
-        this->draw_mode_2 = true;
-        this->m_tr2.points.clear();
-        this->m_tr2.verices_num = this->v2;
-        if(!this->m_tr1.is_completed())
-            this->m_tr1.points.clear();
+        draw_mode_1 = false;
+        draw_mode_2 = true;
+        m_tr2.points.clear();
+        m_tr2.verices_num = v2;
+        if(!m_tr1.is_completed())
+            m_tr1.points.clear();
     }
 }
 
 void UserInterface::draw_intersection()
 {
     std::vector<Point> points1,points2;
-    for(ImVec2 p : this->m_tr1.points)
+    for(ImVec2 p : m_tr1.points)
         points1.emplace_back(p.x,p.y);
-    for(ImVec2 p : this->m_tr2.points)
+    for(ImVec2 p : m_tr2.points)
         points2.emplace_back(p.x,p.y);
     
     Polygon tr1 = Polygon(points1);
@@ -210,31 +210,31 @@ void UserInterface::Update()
 
     ImGui::Begin("Hello, user!");                        
     ImGui::Text("Here you have to draw polygons point-by-point.");
-    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, this->draw_mode_1);
-    ImGui::SliderInt("Vertex num 1",&this->v1,this->min_vertices,this->max_vertices);
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, draw_mode_1);
+    ImGui::SliderInt("Vertex num 1",&v1,min_vertices,max_vertices);
     ImGui::PopItemFlag();
-    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, this->draw_mode_2);
-    ImGui::SliderInt("Vertex num 2",&v2,this->min_vertices,this->max_vertices);
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, draw_mode_2);
+    ImGui::SliderInt("Vertex num 2",&v2,min_vertices,max_vertices);
     ImGui::PopItemFlag();
-    this->draw_buttons_set_mode();
+    draw_buttons_set_mode();
 
     ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-    if(!this->m_tr1.is_completed())
-        for(int i(0); i < int(this->m_tr1.points.size())-1; ++i)
-            draw_list->AddLine(this->m_tr1.points[i],this->m_tr1.points[i+1],this->m_tr1.color);
+    if(!m_tr1.is_completed())
+        for(int i(0); i < int(m_tr1.points.size())-1; ++i)
+            draw_list->AddLine(m_tr1.points[i],m_tr1.points[i+1],m_tr1.color);
     else
-        draw_list->AddConvexPolyFilled(this->m_tr1.points.data(),this->m_tr1.points.size(),this->m_tr1.color);
+        draw_list->AddConvexPolyFilled(m_tr1.points.data(),m_tr1.points.size(),m_tr1.color);
 
     draw_list = ImGui::GetBackgroundDrawList();
-    if(!this->m_tr2.is_completed())
-        for(int i(0); i < int(this->m_tr2.points.size())-1; ++i)
-            draw_list->AddLine(this->m_tr2.points[i],this->m_tr2.points[i+1],this->m_tr2.color);
+    if(!m_tr2.is_completed())
+        for(int i(0); i < int(m_tr2.points.size())-1; ++i)
+            draw_list->AddLine(m_tr2.points[i],m_tr2.points[i+1],m_tr2.color);
     else
-        draw_list->AddConvexPolyFilled(this->m_tr2.points.data(),this->m_tr2.points.size(),this->m_tr2.color);
+        draw_list->AddConvexPolyFilled(m_tr2.points.data(),m_tr2.points.size(),m_tr2.color);
 
-    if(this->m_tr1.is_completed() && this->m_tr2.is_completed())
+    if(m_tr1.is_completed() && m_tr2.is_completed())
     {
-        this->draw_intersection();
+        draw_intersection();
     }
     ImGui::End();
 };
