@@ -202,6 +202,15 @@ void UserInterface::draw_intersection()
     }
 }
 
+void UserInterface::draw_incompleted(ImDrawList *draw_list, bool poly_num)
+{
+    const polygon& target_poly = poly_num ? m_tr2 : m_tr1;
+    for(int i(0); i < int(target_poly.points.size())-1; ++i)
+        draw_list->AddLine(target_poly.points[i],target_poly.points[i+1],target_poly.color);
+    for(ImVec2 p : target_poly.points)
+        draw_list->AddCircleFilled(p,3.0,target_poly.color);
+}
+
 void UserInterface::Update()
 {   
 
@@ -217,24 +226,19 @@ void UserInterface::Update()
     ImGui::SliderInt("Vertex num 2",&v2,min_vertices,max_vertices);
     ImGui::PopItemFlag();
     draw_buttons_set_mode();
+    ImGui::End();
 
-    ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
+    ImDrawList *draw_list = ImGui::GetBackgroundDrawList();
     if(!m_tr1.is_completed())
-        for(int i(0); i < int(m_tr1.points.size())-1; ++i)
-            draw_list->AddLine(m_tr1.points[i],m_tr1.points[i+1],m_tr1.color);
+        draw_incompleted(draw_list,false);
     else
         draw_list->AddConvexPolyFilled(m_tr1.points.data(),m_tr1.points.size(),m_tr1.color);
 
-    draw_list = ImGui::GetBackgroundDrawList();
     if(!m_tr2.is_completed())
-        for(int i(0); i < int(m_tr2.points.size())-1; ++i)
-            draw_list->AddLine(m_tr2.points[i],m_tr2.points[i+1],m_tr2.color);
+        draw_incompleted(draw_list,true);
     else
         draw_list->AddConvexPolyFilled(m_tr2.points.data(),m_tr2.points.size(),m_tr2.color);
 
     if(m_tr1.is_completed() && m_tr2.is_completed())
-    {
         draw_intersection();
-    }
-    ImGui::End();
 };
