@@ -148,7 +148,6 @@ void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int 
                 target_poly.points.push_back(ImVec2(xpos,ypos));
             if(target_poly.points.size() == target_poly.verices_num)
                 this->draw_mode_1 = this->draw_mode_2 = false;
-            std::cout << this->m_tr1.points.size() << ' ' << this->m_tr2.points.size() << '\n';
         }
     }
 }
@@ -237,87 +236,5 @@ void UserInterface::Update()
     {
         this->draw_intersection();
     }
-    /*
-    static bool show_settings1_window = false;
-    static bool show_settings2_window = false;
-
-    if (ImGui::Button("Add polygons"))
-        {
-            show_settings1_window = true;
-            show_settings2_window = true;
-        }
-    if (show_settings1_window)
-    {
-        ImGui::SetNextWindowPos(ImVec2(50, 200), ImGuiCond_Once, ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
-
-        ImGui::Begin("Settings1", &show_settings1_window);
-        ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-        draw_list->AddTriangleFilled(m_tr1.point1, m_tr1.point2, m_tr1.point3, m_tr1.color);
-        ImGui::Text("Coordinates:");
-        ImGui::Spacing();
-
-        ImGui::SeparatorText("1st point");
-        ImGui::SliderFloat("x1", &m_tr1.point1.x, 0, width);
-        ImGui::SliderFloat("y1", &m_tr1.point1.y, 0, height);
-
-        ImGui::SeparatorText("2nd point");
-        ImGui::SliderFloat("x2", &m_tr1.point2.x, 0, width);
-        ImGui::SliderFloat("y2", &m_tr1.point2.y, 0, height);
-
-        ImGui::SeparatorText("3rd point");
-        ImGui::SliderFloat("x3", &m_tr1.point3.x, 0, width);
-        ImGui::SliderFloat("y3", &m_tr1.point3.y, 0, height);
-
-        ImGui::End();
-    };
-
-    if (show_settings2_window)
-    {
-        m_tr2.color = ImColor(255, 0, 0);
-        ImGui::SetNextWindowPos(ImVec2(1000, 200), ImGuiCond_Once, ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
-
-        ImGui::Begin("Settings2", &show_settings2_window);
-        ImDrawList* draw_list = ImGui::GetBackgroundDrawList(); 
-        draw_list->AddTriangleFilled(m_tr2.point1, m_tr2.point2, m_tr2.point3, m_tr2.color);
-        ImGui::Text("Coordinates:");
-        ImGui::Spacing();
-
-        ImGui::SeparatorText("1st point");
-        ImGui::SliderFloat("x1", &m_tr2.point1.x, 0, width);
-        ImGui::SliderFloat("y1", &m_tr2.point1.y, 0, height);
-
-        ImGui::SeparatorText("2nd point");
-        ImGui::SliderFloat("x2", &m_tr2.point2.x, 0, width);
-        ImGui::SliderFloat("y2", &m_tr2.point2.y, 0, height);
-
-        ImGui::SeparatorText("3rd point");
-        ImGui::SliderFloat("x3", &m_tr2.point3.x, 0, width);
-        ImGui::SliderFloat("y3", &m_tr2.point3.y, 0, height);
-
-        ImGui::End();
-    }
-
-    if (show_settings1_window && show_settings2_window)
-    {
-        std::vector<Point> points_1 = {{{m_tr1.point1.x,m_tr1.point1.y},{m_tr1.point2.x,m_tr1.point2.y},{m_tr1.point3.x,m_tr1.point3.y}}};
-        std::vector<Point> points_2 = {{{m_tr2.point1.x,m_tr2.point1.y},{m_tr2.point2.x,m_tr2.point2.y},{m_tr2.point3.x,m_tr2.point3.y}}};
-        Polygon tr1 = Polygon(points_1);
-        Polygon tr2 = Polygon(points_2);
-
-        auto intersection_points = tr1.intersect(tr2);
-
-        ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-
-        for(int i = 0; i < intersection_points.size(); ++i)
-        {
-            Point point = intersection_points[i];
-            Point point_next = intersection_points[(i+1)%intersection_points.size()];
-            draw_list->AddLine(ImVec2(point.get_x(),point.get_y()),ImVec2(point_next.get_x(),point_next.get_y()),ImColor(255, 255, 102), 3);
-        }
-    }
-    */
     ImGui::End();
-    
 };
