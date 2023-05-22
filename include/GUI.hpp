@@ -6,6 +6,7 @@
 #include "imgui_impl_opengl3.h"
 #include "GLFW/glfw3.h" // Will drag system OpenGL headers
 #include "polygon.hpp"
+#include "imgui_internal.h"
 #include <stdio.h>
 #include <iostream>
 #include <array>
@@ -16,7 +17,7 @@ static void glfw_error_callback(int error, const char* description)
 }
 
 class Window{
-private:
+protected:
     GLFWwindow* window;
     ImVec4 clear_color{0.45f, 0.55f, 0.60f, 1.00f};
 public:
@@ -32,25 +33,39 @@ public:
     virtual void Update() = 0;
 };
 
-struct triangle
-{
-    ImVec2 point1 = ImVec2(50, 100);
-    ImVec2 point2 = ImVec2(100, 50);
-    ImVec2 point3 = ImVec2(150, 100);
-    ImColor color = ImColor(0, 0, 255);
-};
-
 class UserInterface : public Window
 {
 private:
-    inline static triangle m_tr1, m_tr2;
+    static constexpr int min_vertices = 3;
+    static constexpr int max_vertices = 10;
+
+    struct polygon
+    {
+        std::vector<ImVec2> points;
+        int verices_num{-1};
+        bool skew_sign;
+        ImColor color;
+
+        bool is_completed() const;
+    };
+
+    polygon m_tr1, m_tr2;
+    int v1{min_vertices},v2{min_vertices};
+    bool draw_mode_1{false},draw_mode_2{false};
+
+    void __mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+    static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+
+    void draw_buttons_set_mode();
+    void draw_intersection();
+    bool is_draw_mode() const;
 public:
-    UserInterface() = default;
+    UserInterface();
     ~UserInterface() = default;
 
     virtual void Update() final;
 
-    const triangle& Get1Triangle();
-    const triangle& Get2Triangle();
+    polygon Get1Triangle();
+    polygon Get2Triangle();
 };
 #endif

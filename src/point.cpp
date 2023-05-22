@@ -34,6 +34,11 @@ Point Point::operator+(const Point& other) const
     return {this->m_x+other.m_x,this->m_y+other.m_y};
 }
 
+Point Point::operator-(const Point& other) const
+{
+    return {this->m_x-other.m_x,this->m_y-other.m_y};
+}
+
 Point Point::operator/(float n) const
 {
     return {this->m_x/n,this->m_y/n};

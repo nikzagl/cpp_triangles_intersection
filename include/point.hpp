@@ -23,6 +23,7 @@ public:
     bool operator<(const Point& other) const;
     Point operator-() const;
     Point operator+(const Point& other) const;
+    Point operator-(const Point& other) const;
     Point operator/(float n) const;
     [[nodiscard]] float skew_product(const Point& other)const;
 

@@ -80,28 +80,168 @@ void Window::Run()
 
 };
 
-const triangle& UserInterface::Get1Triangle()
+bool UserInterface::polygon::is_completed() const
+{
+    return this->verices_num == this->points.size();
+}
+
+UserInterface::UserInterface()
+{
+    this->m_tr1.color = ImColor(0, 0, 255);
+    this->m_tr2.color = ImColor(255, 0, 0);
+    glfwSetWindowUserPointer(this->window,this);
+    glfwSetMouseButtonCallback(this->window,this->mouse_button_callback);
+}
+
+UserInterface::polygon UserInterface::Get1Triangle()
 {
     return this->m_tr1;
 };
-const triangle& UserInterface::Get2Triangle()
+
+UserInterface::polygon UserInterface::Get2Triangle()
 {
     return this->m_tr2;
 };
+
+bool UserInterface::is_draw_mode() const
+{
+    return this->draw_mode_1 || this->draw_mode_2;
+}
+
+void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
+{
+    ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        if(this->is_draw_mode())
+        {
+            polygon& target_poly = this->draw_mode_1 ? this->m_tr1 : this->m_tr2;
+            double xpos,ypos;
+            glfwGetCursorPos(window,&xpos,&ypos);
+            if(target_poly.points.size() > 1)
+            {
+                ImVec2 last = target_poly.points.back();
+                ImVec2 lastlast = *(target_poly.points.rbegin()+1);
+                Point last_p(last.x,last.y);
+                Point lastlast_p(lastlast.x,lastlast.y);
+                Point curr(xpos,ypos);
+                Point curr_vec = curr-last_p;
+                Point last_vec = last_p-lastlast_p;
+                bool curr_skew_sign = curr_vec.skew_product(last_vec) > 0 ? true : false;
+                if(target_poly.points.size() == 2)
+                    target_poly.skew_sign = curr_skew_sign;
+                if(target_poly.skew_sign == curr_skew_sign)
+                    if(target_poly.points.size()+1 != target_poly.verices_num)
+                        target_poly.points.push_back(ImVec2(xpos,ypos));
+                    else
+                    {
+                        ImVec2 first = target_poly.points[0];
+                        Point first_p(first.x,first.y);
+                        last_vec = curr_vec;
+                        curr_vec = first_p-curr;
+                        curr_skew_sign = curr_vec.skew_product(last_vec) > 0 ? true : false;
+                        if(target_poly.skew_sign == curr_skew_sign)
+                            target_poly.points.push_back(ImVec2(xpos,ypos));
+                    }
+            }
+            else
+                target_poly.points.push_back(ImVec2(xpos,ypos));
+            if(target_poly.points.size() == target_poly.verices_num)
+                this->draw_mode_1 = this->draw_mode_2 = false;
+            std::cout << this->m_tr1.points.size() << ' ' << this->m_tr2.points.size() << '\n';
+        }
+    }
+}
+
+void UserInterface::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
+{
+    UserInterface *instance = static_cast<UserInterface*>(glfwGetWindowUserPointer(window));
+    instance->__mouse_button_callback(window,button,action,mods);
+}
+
+void UserInterface::draw_buttons_set_mode()
+{
+    if(ImGui::Button("Draw polygon 1"))
+    {
+        this->draw_mode_1 = true;
+        this->draw_mode_2 = false;
+        this->m_tr1.points.clear();
+        this->m_tr1.verices_num = this->v1;
+        if(!this->m_tr2.is_completed())
+            this->m_tr2.points.clear();
+    }
+    else if(ImGui::Button("Draw polygon 2"))
+    {
+        this->draw_mode_1 = false;
+        this->draw_mode_2 = true;
+        this->m_tr2.points.clear();
+        this->m_tr2.verices_num = this->v2;
+        if(!this->m_tr1.is_completed())
+            this->m_tr1.points.clear();
+    }
+}
+
+void UserInterface::draw_intersection()
+{
+    std::vector<Point> points1,points2;
+    for(ImVec2 p : this->m_tr1.points)
+        points1.emplace_back(p.x,p.y);
+    for(ImVec2 p : this->m_tr2.points)
+        points2.emplace_back(p.x,p.y);
+    
+    Polygon tr1 = Polygon(points1);
+    Polygon tr2 = Polygon(points2);
+
+    ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
+
+    auto intersection_points = tr1.intersect(tr2);
+    for(int i = 0; i < intersection_points.size(); ++i)
+    {
+        Point point = intersection_points[i];
+        Point point_next = intersection_points[(i+1)%intersection_points.size()];
+        draw_list->AddLine(ImVec2(point.get_x(),point.get_y()),ImVec2(point_next.get_x(),point_next.get_y()),ImColor(255, 255, 102), 3);
+    }
+}
 
 void UserInterface::Update()
 {   
 
     ImGui::SetNextWindowPos(ImVec2(360, 120), ImGuiCond_Once, ImVec2(0, 0));
-    ImGui::SetNextWindowSize(ImVec2(500, 80), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(500, 160), ImGuiCond_Once);
 
     ImGui::Begin("Hello, user!");                        
-    ImGui::Text("Here you can create 2 triangles and find their intersection.");         
+    ImGui::Text("Here you have to draw polygons point-by-point.");
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, this->draw_mode_1);
+    ImGui::SliderInt("Vertex num 1",&this->v1,this->min_vertices,this->max_vertices);
+    ImGui::PopItemFlag();
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, this->draw_mode_2);
+    ImGui::SliderInt("Vertex num 2",&v2,this->min_vertices,this->max_vertices);
+    ImGui::PopItemFlag();
+    this->draw_buttons_set_mode();
 
+    ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
+    if(!this->m_tr1.is_completed())
+        for(int i(0); i < int(this->m_tr1.points.size())-1; ++i)
+            draw_list->AddLine(this->m_tr1.points[i],this->m_tr1.points[i+1],this->m_tr1.color);
+    else
+        draw_list->AddConvexPolyFilled(this->m_tr1.points.data(),this->m_tr1.points.size(),this->m_tr1.color);
+
+    draw_list = ImGui::GetBackgroundDrawList();
+    if(!this->m_tr2.is_completed())
+        for(int i(0); i < int(this->m_tr2.points.size())-1; ++i)
+            draw_list->AddLine(this->m_tr2.points[i],this->m_tr2.points[i+1],this->m_tr2.color);
+    else
+        draw_list->AddConvexPolyFilled(this->m_tr2.points.data(),this->m_tr2.points.size(),this->m_tr2.color);
+
+    if(this->m_tr1.is_completed() && this->m_tr2.is_completed())
+    {
+        this->draw_intersection();
+    }
+    /*
     static bool show_settings1_window = false;
     static bool show_settings2_window = false;
 
-    if (ImGui::Button("Add triangles"))
+    if (ImGui::Button("Add polygons"))
         {
             show_settings1_window = true;
             show_settings2_window = true;
@@ -177,7 +317,7 @@ void UserInterface::Update()
             draw_list->AddLine(ImVec2(point.get_x(),point.get_y()),ImVec2(point_next.get_x(),point_next.get_y()),ImColor(255, 255, 102), 3);
         }
     }
-
+    */
     ImGui::End();
     
 };
