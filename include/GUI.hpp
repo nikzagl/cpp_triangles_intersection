@@ -58,6 +58,7 @@ private:
 
     void draw_buttons_set_mode();
     void draw_intersection();
+    void draw_incompleted(ImDrawList *draw_list, bool poly_num);
     bool is_draw_mode() const;
 public:
     UserInterface();
