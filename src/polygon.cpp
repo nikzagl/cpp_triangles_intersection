@@ -29,14 +29,6 @@ bool compare_points(const Point& first_point, const Point& second_point, const P
     return first_angle < second_angle;
 }
 
-void sort_points(std::vector<Point>& points, const Point& pivot)
-{
-    std::sort(points.begin(), points.end(),
-              [&](const Point& a, const Point& b) {
-                  return compare_points(a, b, pivot);
-              });
-}
-
 std::vector<Point> Polygon::intersect(const Polygon& other) const
 {
     std::vector<Point> points;
@@ -58,6 +50,10 @@ std::vector<Point> Polygon::intersect(const Polygon& other) const
         }
     Point pivot = {0,0};
     pivot = std::accumulate(points.begin(),points.end(),pivot)/points.size();
-    sort_points(points, pivot);
+    std::sort(points.begin(), points.end(),
+              [&](const Point& a, const Point& b) {
+                  return compare_points(a, b, pivot);
+              });
+
     return points;
 }

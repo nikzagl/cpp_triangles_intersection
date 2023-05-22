@@ -14,7 +14,7 @@ float Point::get_y() const
 
 bool Point::operator==(const Point& other) const
 {
-    return (numbers_comparison::is_approximately_equal(m_x, other.m_x))&&(numbers_comparison::is_approximately_equal(m_y, other.m_y));
+    return (numbers_comparison::is_approximately_equal(m_x, other.m_x)) && (numbers_comparison::is_approximately_equal(m_y, other.m_y));
 }
 
 bool Point::operator!=(const Point& other) const

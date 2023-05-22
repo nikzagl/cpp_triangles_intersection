@@ -23,9 +23,7 @@ bool in_parametric_range(float parametric_view)
 
 Point Line::make_vector() const
 {
-    float x = m_second_point.get_x() - m_first_point.get_x();
-    float y = m_second_point.get_y() - m_first_point.get_y();
-    return {x,y};
+    return m_second_point-m_first_point;
 }
 
 
@@ -57,8 +55,8 @@ std::optional<Point> Line::intersect(const Line &other_line) const
 
 float Line::skew_product_with_point(const Point& point) const
 {
-    Point first_vector = Line(point, m_second_point).make_vector();
-    Point second_vector = Line(point, m_first_point).make_vector();
+    Point first_vector = m_second_point-point;
+    Point second_vector = m_first_point-point;
     return first_vector.skew_product(second_vector);
 }
 float Line::angle_with_x_axis() const
@@ -68,6 +66,6 @@ float Line::angle_with_x_axis() const
 }
 
 Point Line::get_first_point() const { return m_first_point; }
-Point Line::get_second_point() const {return m_second_point; }
+Point Line::get_second_point() const { return m_second_point; }
 
 Line::Line(const Point& first_point, const Point& second_point) : m_first_point(first_point), m_second_point(second_point) {}
