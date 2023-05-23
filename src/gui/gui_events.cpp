@@ -3,6 +3,8 @@
 void UserInterface::__mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+    if(ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow))
+        return;
     if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
         if(is_draw_mode())

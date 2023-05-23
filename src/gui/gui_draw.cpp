@@ -2,19 +2,39 @@
 
 void UserInterface::draw_buttons_set_mode()
 {
-    if(ImGui::Button("Draw polygon 1"))
+    std::string button1_msg = draw_mode_1 ? "Discard" : m_tr1.verices_num > 0 ? "Redraw polygon 1" : "Draw polygon 1";
+    std::string button2_msg = draw_mode_2 ? "Discard" : m_tr2.verices_num > 0 ? "Redraw polygon 2" : "Draw polygon 2";
+    if(ImGui::Button(button1_msg.c_str()))
     {
-        draw_mode_1 = true;
+        if(draw_mode_1)
+        {
+            m_tr1.verices_num = -1;
+            draw_mode_1 = false;
+        }
+        else
+        {
+            m_tr1.verices_num = v1;
+            draw_mode_1 = true;
+        }
         draw_mode_2 = false;
         m_tr1.points.clear();
-        m_tr1.verices_num = v1;
+    
         if(!m_tr2.is_completed())
             m_tr2.points.clear();
     }
-    else if(ImGui::Button("Draw polygon 2"))
+    else if(ImGui::Button(button2_msg.c_str()))
     {
+        if(draw_mode_2)
+        {
+            m_tr2.verices_num = -1;
+            draw_mode_2 = false;
+        }
+        else
+        {
+            m_tr2.verices_num = v2;
+            draw_mode_2 = true;
+        }
         draw_mode_1 = false;
-        draw_mode_2 = true;
         m_tr2.points.clear();
         m_tr2.verices_num = v2;
         if(!m_tr1.is_completed())
@@ -51,4 +71,13 @@ void UserInterface::draw_incompleted(ImDrawList *draw_list, bool poly_num)
         draw_list->AddLine(target_poly.points[i],target_poly.points[i+1],target_poly.color);
     for(ImVec2 p : target_poly.points)
         draw_list->AddCircleFilled(p,3.0,target_poly.color);
+}
+
+void UserInterface::draw_draw_mode_message()
+{
+    std::string draw_mode_message;
+    draw_mode_message += "Drawing polygon ";
+    draw_mode_message += draw_mode_1 ? "1 " : "2 ";
+    draw_mode_message += "with " + std::to_string(draw_mode_1 ? m_tr1.verices_num : m_tr2.verices_num) + " vertices";
+    ImGui::Text(draw_mode_message.c_str());
 }

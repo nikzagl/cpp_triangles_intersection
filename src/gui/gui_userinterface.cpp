@@ -16,14 +16,11 @@ void UserInterface::Update()
 
     ImGui::Begin("Hello, user!");                        
     ImGui::Text("Here you have to draw polygons point-by-point.");
-    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, draw_mode_1);
     ImGui::SliderInt("Vertex num 1",&v1,min_vertices,max_vertices);
-    ImGui::PopItemFlag();
-    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, draw_mode_2);
     ImGui::SliderInt("Vertex num 2",&v2,min_vertices,max_vertices);
-    ImGui::PopItemFlag();
     draw_buttons_set_mode();
-    ImGui::End();
+    if(is_draw_mode())
+        draw_draw_mode_message();
 
     ImDrawList *draw_list = ImGui::GetBackgroundDrawList();
     if(!m_tr1.is_completed())
@@ -38,4 +35,6 @@ void UserInterface::Update()
 
     if(m_tr1.is_completed() && m_tr2.is_completed())
         draw_intersection();
+    
+    ImGui::End();
 };

@@ -7,9 +7,9 @@
 #include "GLFW/glfw3.h" // Will drag system OpenGL headers
 #include "polygon.hpp"
 #include "imgui_internal.h"
-#include <stdio.h>
 #include <iostream>
 #include <array>
+#include <string>
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -59,6 +59,8 @@ private:
     void draw_buttons_set_mode();
     void draw_intersection();
     void draw_incompleted(ImDrawList *draw_list, bool poly_num);
+    void draw_draw_mode_message();
+
     bool is_draw_mode() const;
 public:
     UserInterface();
