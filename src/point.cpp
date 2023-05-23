@@ -49,8 +49,31 @@ Point Point::operator-() const
     return {-m_x,-m_y};
 }
 
-float Point::skew_product(const Point& other)const
+float Point::length() const
 {
-    return get_x()*other.get_y() - get_y()*other.get_x();
+    return std::sqrt(std::pow(m_x,2) + std::pow(m_y,2));
 }
 
+float Point::skew_product(const Point& other) const
+{
+    return m_x*other.m_y - m_y*other.m_x;
+}
+
+float Point::dot_product(const Point& other) const
+{
+    return m_x*other.m_x + m_y*other.m_y;
+}
+
+float Point::get_angel_deg(const Point& other) const
+{
+    float len = length();
+    float len_other = other.length();
+    if(numbers_comparison::is_approximately_equal(len,0.0) || numbers_comparison::is_approximately_equal(len_other,0.0))
+        return 0.0;
+    float _sin = -std::max(-1.0f,std::min(1.0f,skew_product(other)/length()/other.length()));
+    float _cos = std::max(-1.0f,std::min(1.0f,dot_product(other)/length()/other.length()));
+    float angle_ambig = acos(_cos)*180/M_PI;
+
+    return _sin > 0 ? angle_ambig : 360 - angle_ambig;
+
+}

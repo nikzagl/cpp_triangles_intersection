@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-
 #include "../include/polygon.hpp"
+
 TEST(test_triangle, test_is_covering_expected_result){
     Point p1{0, 0};
     Point p2{0, 1};
