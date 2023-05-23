@@ -54,6 +54,7 @@ private:
 
     void __mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
     static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+    ::Polygon get_poly_from_vec_and_angle(const Line& vec, float angle);
 
     void draw_buttons_set_mode();
     void draw_intersection();

@@ -64,7 +64,7 @@ float Point::dot_product(const Point& other) const
     return m_x*other.m_x + m_y*other.m_y;
 }
 
-float Point::get_angel_deg(const Point& other) const
+float Point::get_angle(const Point& other) const
 {
     float len = length();
     float len_other = other.length();
@@ -72,8 +72,13 @@ float Point::get_angel_deg(const Point& other) const
         return 0.0;
     float _sin = -std::max(-1.0f,std::min(1.0f,skew_product(other)/length()/other.length()));
     float _cos = std::max(-1.0f,std::min(1.0f,dot_product(other)/length()/other.length()));
-    float angle_ambig = acos(_cos)*180/M_PI;
+    float angle_ambig = acos(_cos);
 
-    return _sin > 0 ? angle_ambig : 360 - angle_ambig;
+    return _sin > 0 ? angle_ambig : 2*M_PI - angle_ambig;
 
+}
+
+float Point::get_tan() const
+{
+    return m_y/m_x;
 }
