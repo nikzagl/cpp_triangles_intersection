@@ -42,6 +42,7 @@ private:
     {
         std::vector<ImVec2> points;
         int verices_num{-1};
+        float angles_sum{0};
         bool skew_sign;
         ImColor color;
 
@@ -60,6 +61,8 @@ private:
     void draw_intersection();
     void draw_incompleted(ImDrawList *draw_list, bool poly_num);
     void draw_draw_mode_message();
+
+    void count_angles_sum();
 
     bool is_draw_mode() const;
 public:

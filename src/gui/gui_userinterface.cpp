@@ -21,6 +21,8 @@ void UserInterface::Update()
     draw_buttons_set_mode();
     if(is_draw_mode())
         draw_draw_mode_message();
+    count_angles_sum();
+    std::cout << m_tr1.angles_sum << " | " << m_tr2.angles_sum << '\n';
 
     ImDrawList *draw_list = ImGui::GetBackgroundDrawList();
     if(!m_tr1.is_completed())

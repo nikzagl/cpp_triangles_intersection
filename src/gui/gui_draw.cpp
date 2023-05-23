@@ -66,7 +66,8 @@ void UserInterface::draw_intersection()
 
 void UserInterface::draw_incompleted(ImDrawList *draw_list, bool poly_num)
 {
-    const polygon& target_poly = poly_num ? m_tr2 : m_tr1;
+    polygon& target_poly = poly_num ? m_tr2 : m_tr1;
+    target_poly.angles_sum = 0;
     for(int i(0); i < int(target_poly.points.size())-1; ++i)
         draw_list->AddLine(target_poly.points[i],target_poly.points[i+1],target_poly.color);
     for(ImVec2 p : target_poly.points)

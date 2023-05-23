@@ -31,6 +31,33 @@ Point get_vec_from_angle(const Point& anchor, float angle)
     return Point(res_cos,res_sin);
 }
 
+void UserInterface::count_angles_sum()
+{
+    m_tr1.angles_sum = m_tr2.angles_sum = 0;
+    for(int i(0); i < int(m_tr1.points.size())-1; ++i)
+    {
+        if(i > 0)
+        {
+            Point first_vec(m_tr1.points[i].x-m_tr1.points[i-1].x,m_tr1.points[i].y-m_tr1.points[i-1].y);
+            Point second_vec(m_tr1.points[i+1].x-m_tr1.points[i].x,m_tr1.points[i+1].y-m_tr1.points[i].y);
+            float angle = first_vec.get_angle(second_vec);
+            angle = angle < M_PI ? M_PI-angle : angle-M_PI;
+            m_tr1.angles_sum += angle;
+        }
+    }
+    for(int i(0); i < int(m_tr2.points.size())-1; ++i)
+    {
+        if(i > 0)
+        {
+            Point first_vec(m_tr2.points[i].x-m_tr2.points[i-1].x,m_tr2.points[i].y-m_tr2.points[i-1].y);
+            Point second_vec(m_tr2.points[i+1].x-m_tr2.points[i].x,m_tr2.points[i+1].y-m_tr2.points[i].y);
+            float angle = first_vec.get_angle(second_vec);
+            angle = angle < M_PI ? M_PI-angle : angle-M_PI;
+            m_tr2.angles_sum += angle;
+        }
+    }
+}
+
 ::Polygon UserInterface::get_poly_from_vec_and_angle(const Line& vec, float angle)
 {
     ::Polygon display_poly({{0,0},{width,0},{width,height},{0,height}});
