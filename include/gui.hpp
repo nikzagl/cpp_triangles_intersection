@@ -10,6 +10,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <algorithm>
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -20,7 +21,7 @@ class Window{
 protected:
     GLFWwindow* window;
     const int height,width;
-    static constexpr ImVec4 clear_color{0.45f, 0.55f, 0.60f, 1.00f};
+    static constexpr ImVec4 clear_color{0.66f, 0.80f, 0.90f, 1.00f};
 public:
 
     Window(int width=1280, int height=720);
@@ -37,6 +38,8 @@ class UserInterface : public Window
 private:
     static constexpr int min_vertices = 3;
     static constexpr int max_vertices = 10;
+
+    static constexpr ImVec4 valid_vertices_area_color{1.0f, 0.0f, 0.0f, 0.1f};
 
     struct polygon
     {
@@ -55,10 +58,12 @@ private:
 
     void __mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
     static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
-    ::Polygon get_poly_from_vec_and_angle(const Line& vec, float angle);
+    std::vector<Point> get_poly_from_vec_and_angle(const Line& vec, float angle);
+    Point get_border_intersect_point(const Point& dir_vec, const Point& pivot);
 
     void draw_buttons_set_mode();
     void draw_intersection();
+    void draw_valid_vertices_area(bool poly_num);
     void draw_incompleted(ImDrawList *draw_list, bool poly_num);
     void draw_draw_mode_message();
 

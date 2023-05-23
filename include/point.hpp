@@ -30,6 +30,7 @@ public:
     [[nodiscard]] float length() const;
     [[nodiscard]] float get_angle(const Point& other) const;    // in rads, counterclock-wise
     [[nodiscard]] float get_tan() const;
+    [[nodiscard]] float get_ctan() const;
 
 };
 

@@ -82,3 +82,8 @@ float Point::get_tan() const
 {
     return m_y/m_x;
 }
+
+float Point::get_ctan() const
+{
+    return m_x/m_y;
+}

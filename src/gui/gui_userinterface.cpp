@@ -26,12 +26,18 @@ void UserInterface::Update()
 
     ImDrawList *draw_list = ImGui::GetBackgroundDrawList();
     if(!m_tr1.is_completed())
+    {
         draw_incompleted(draw_list,false);
+        draw_valid_vertices_area(false);
+    }
     else
         draw_list->AddConvexPolyFilled(m_tr1.points.data(),m_tr1.points.size(),m_tr1.color);
 
     if(!m_tr2.is_completed())
+    {
         draw_incompleted(draw_list,true);
+        draw_valid_vertices_area(true);
+    }
     else
         draw_list->AddConvexPolyFilled(m_tr2.points.data(),m_tr2.points.size(),m_tr2.color);
 
