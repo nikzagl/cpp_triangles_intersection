@@ -1,4 +1,4 @@
-#include "GUI.hpp"
+#include "gui.hpp"
 #include "polygon.hpp"
 #include <gtest/gtest.h>
 int main(){

@@ -49,7 +49,7 @@ target_link_libraries(imgui
         )
 
 set(INCLUDE_DIR include)
-file(GLOB SOURCES src/*.cpp)
+file(GLOB SOURCES src/*.cpp src/gui/*.cpp)
 file(GLOB TESTS tests/*.cpp)
 
 add_executable(testing
