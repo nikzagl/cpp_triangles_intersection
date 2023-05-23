@@ -19,12 +19,11 @@ static void glfw_error_callback(int error, const char* description)
 class Window{
 protected:
     GLFWwindow* window;
-    ImVec4 clear_color{0.45f, 0.55f, 0.60f, 1.00f};
+    const int height,width;
+    static constexpr ImVec4 clear_color{0.45f, 0.55f, 0.60f, 1.00f};
 public:
 
-    inline static int width, height;
-
-    Window();
+    Window(int width=1280, int height=720);
 
     ~Window();
     

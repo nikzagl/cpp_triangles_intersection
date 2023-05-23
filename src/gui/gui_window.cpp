@@ -1,6 +1,6 @@
 #include "gui.hpp"
 
-Window::Window()
+Window::Window(int width, int height) : width(width), height(height)
 {   
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
@@ -22,7 +22,7 @@ Window::Window()
     #endif
 
     // Create window with graphics context
-    window = glfwCreateWindow(1280, 720, "Triangles intersection", NULL, NULL);
+    window = glfwCreateWindow(width, height, "Triangles intersection", NULL, NULL);
     if (window == NULL)
         std::exit(1);
     glfwMakeContextCurrent(window);
@@ -61,8 +61,6 @@ void Window::Run()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
-        glfwGetWindowSize(window, &width, &height);
         
         //main drawings
         Update();
@@ -72,7 +70,7 @@ void Window::Run()
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
