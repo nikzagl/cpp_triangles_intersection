@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: install dependencies
       run:  |
-            apt-get update 
+            sudo apt-get update 
             sudo apt-get install xorg-dev libglu1-mesa-dev libgtest-dev libgmock-dev
     - name: Checkout
       uses: actions/checkout@v2.0.0
