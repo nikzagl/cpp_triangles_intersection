@@ -57,7 +57,7 @@ add_executable(testing
         src/misc.cpp
         src/point.cpp
         src/polygon.cpp
-        tests/test_triangle.cpp
+        tests/test_polygon.cpp
         tests/test_line.cpp)
 target_include_directories(testing PUBLIC googletest include imgui)
 target_link_libraries(
