@@ -14,11 +14,11 @@ TEST(test_polygon, test_is_covering_expected_result) {
 }
 
 TEST(test_polygon, test_get_polygon_intersection_expected_result_empty) {
-    Point p1{ -4, 03 };
+    Point p1{ -4, 3 };
     Point p2{ -5, 1 };
     Point p3{ -4, -2 };
     Point p4{ -2, -2 };
-    Point p5{ 0, -0 };
+    Point p5{ 0, 0 };
     Point p6{ -2, 5 };
     Polygon t1{ {p1, p2, p3, p4, p5, p6} };
 
