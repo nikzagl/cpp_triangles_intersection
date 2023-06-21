@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 
 add_executable(
-        test_tst test_triangle.cpp test_line.cpp
+        test_tst test_polygon.cpp test_line.cpp
 )
 target_link_libraries(
         test_tst

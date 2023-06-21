@@ -4,6 +4,8 @@ project(cpp_triangles_intersection)
 
 set(CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -static")
+
 find_package(OpenGL REQUIRED)
 include(FetchContent)
 FetchContent_Declare(
@@ -57,7 +59,7 @@ add_executable(testing
         src/misc.cpp
         src/point.cpp
         src/polygon.cpp
-        tests/test_triangle.cpp
+        tests/test_polygon.cpp
         tests/test_line.cpp)
 target_include_directories(testing PUBLIC googletest include imgui)
 target_link_libraries(
