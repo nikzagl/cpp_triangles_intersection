@@ -4,7 +4,7 @@ project(cpp_triangles_intersection)
 
 set(CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -static")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 find_package(OpenGL REQUIRED)
 include(FetchContent)

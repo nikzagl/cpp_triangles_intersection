@@ -62,6 +62,8 @@ float Line::skew_product_with_point(const Point& point) const
 float Line::angle_with_x_axis() const
 {
     Point line_vector = make_vector();
+    if(numbers_comparison::is_approximately_equal(line_vector.get_y(),0) and numbers_comparison::is_approximately_equal(line_vector.get_x(),0))
+        return -M_PI;
     return atan2(line_vector.get_y(), line_vector.get_x());
 }
 
