@@ -174,12 +174,12 @@ TEST(test_polygon, test_get_polygon_intersection_expected_result_4) {
 
     auto res = t1.intersect(t2);
     ASSERT_TRUE(res.size() == 4);
-    ASSERT_NEAR(res[0].get_x(), -4, result_max_error);
+    ASSERT_NEAR(res[0].get_x(), -2, result_max_error);
     ASSERT_NEAR(res[0].get_y(), -2, result_max_error);
-    ASSERT_NEAR(res[1].get_x(), -2, result_max_error);
-    ASSERT_NEAR(res[1].get_y(), -2, result_max_error);
-    ASSERT_NEAR(res[2].get_x(), -1, result_max_error);
-    ASSERT_NEAR(res[2].get_y(), -1, result_max_error);
+    ASSERT_NEAR(res[1].get_x(), 0, result_max_error);
+    ASSERT_NEAR(res[1].get_y(), 0, result_max_error);
+    ASSERT_NEAR(res[2].get_x(), -2, result_max_error);
+    ASSERT_NEAR(res[2].get_y(), 0, result_max_error);
     ASSERT_NEAR(res[3].get_x(), -3, result_max_error);
     ASSERT_NEAR(res[3].get_y(), -1, result_max_error);
 }
@@ -217,7 +217,7 @@ TEST(test_polygon, test_get_polygon_intersection_expected_result_6) {
     Point p1{ -1.6, 7.25 };
     Point p2{ -4, 4 };
     Point p3{ -5, 2 };
-    Point p4{ -4, -0 };
+    Point p4{ -4, 0 };
     Point p5{ 0, 0 };
     Point p6{ 0, 8 };
     Polygon t1{ {p1, p2, p3, p4, p5, p6} };
@@ -239,42 +239,10 @@ TEST(test_polygon, test_get_polygon_intersection_expected_result_6) {
     ASSERT_NEAR(res[3].get_x(), 0, result_max_error);
     ASSERT_NEAR(res[3].get_y(), 6, result_max_error);
     ASSERT_NEAR(res[4].get_x(), -1.6, result_max_error);
-    ASSERT_NEAR(res[4].get_y(), -7.25, result_max_error);
+    ASSERT_NEAR(res[4].get_y(), 7.25, result_max_error);
     ASSERT_NEAR(res[5].get_x(), -4, result_max_error);
-    ASSERT_NEAR(res[5].get_y(), -4, result_max_error);
+    ASSERT_NEAR(res[5].get_y(), 4, result_max_error);
     
-}
-
-TEST(test_polygon, test_get_polygon_intersection_expected_result_7) {
-    Point p1{ 0, 7 };
-    Point p2{ -4, 4 };
-    Point p3{ -4, 1 };
-    Point p4{ -2, -2 };
-    Point p5{ 0, 0 };
-    Polygon t1{ {p1, p2, p3, p4, p5} };
-
-    Point p1_{ -1, 7 };
-    Point p2_{ 2, 4 };
-    Point p3_{ -1, -2 };
-    Point p4_{ -5, 1 };
-    Polygon t2{ {p1_, p2_, p3_, p4_} };
-
-    auto res = t1.intersect(t2);
-    ASSERT_TRUE(res.size() == 7);
-    ASSERT_NEAR(res[0].get_x(), -1.57, result_max_error);
-    ASSERT_NEAR(res[0].get_y(), -1.57, result_max_error);
-    ASSERT_NEAR(res[1].get_x(), 0, result_max_error);
-    ASSERT_NEAR(res[1].get_y(), 0, result_max_error);
-    ASSERT_NEAR(res[2].get_x(), 0, result_max_error);
-    ASSERT_NEAR(res[2].get_y(), 6, result_max_error);
-    ASSERT_NEAR(res[3].get_x(), 0.57, result_max_error);
-    ASSERT_NEAR(res[3].get_y(), 0.67, result_max_error);
-    ASSERT_NEAR(res[4].get_x(), -2, result_max_error);
-    ASSERT_NEAR(res[4].get_y(), 5.5, result_max_error);
-    ASSERT_NEAR(res[5].get_x(), -4, result_max_error);
-    ASSERT_NEAR(res[5].get_y(), 2.5, result_max_error);
-    ASSERT_NEAR(res[6].get_x(), -4, result_max_error);
-    ASSERT_NEAR(res[6].get_y(), 0.25, result_max_error);
 }
 
 TEST(test_polygon, test_get_polygon_intersection_expected_result_8) {

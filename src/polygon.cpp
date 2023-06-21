@@ -10,12 +10,10 @@ Polygon::Polygon(const std::vector<Point> &points)
 
 bool Polygon::is_covering(const Point& point) const
 {
-    return std::adjacent_find(m_lines.begin(),m_lines.end(),
-    [point](const Line& a, const Line& b)
-    { 
-        return a.skew_product_with_point(point) < 0 != b.skew_product_with_point(point) < 0; 
-    }
-    ) == m_lines.end();
+    std::vector<float> skews;
+    std::transform(m_lines.begin(),m_lines.end(),std::back_inserter(skews),[point](const Line& x) { return x.skew_product_with_point(point); });
+    bool sign = *std::find_if(skews.begin(),skews.end(),[](float x) { return not numbers_comparison::is_approximately_equal(x,0); }) > 0;
+    return std::all_of(skews.begin(),skews.end(),[sign](float x) { return (x > 0) == sign or numbers_comparison::is_approximately_equal(x,0); });
 }
 
 bool is_in(const std::vector<Point>& points, const Point& comparing_point)
@@ -54,11 +52,19 @@ std::vector<Point> Polygon::intersect(const Polygon& other) const
                 points.push_back(curr_intersection.value());
         }
     Point pivot = {0,0};
-    pivot = std::accumulate(points.begin(),points.end(),pivot)/points.size();
+    if(not points.empty())
+        pivot = *std::min_element(points.begin(),points.end(),
+        [](const Point& a, const Point& b)
+        {
+            return not numbers_comparison::is_approximately_equal(a.get_y(),b.get_y()) ? a.get_y() < b.get_y() : a.get_x() < b.get_x();
+        });
+    //pivot = std::accumulate(points.begin(),points.end(),pivot)/points.size();
     std::sort(points.begin(), points.end(),
               [&](const Point& a, const Point& b) {
                   return compare_points(a, b, pivot);
               });
+    auto remove_first = std::unique(points.begin(),points.end(),[](const Point& a, const Point& b) { return a == b; });
+    points.erase(remove_first,points.end());
 
     return points;
 }
